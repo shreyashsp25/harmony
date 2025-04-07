@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony - Profile</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f0e17;
+            color: #fffffe;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #1a1a2e;
+            padding: 15px 40px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 90%;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #eebbc3;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 10px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: #ff8906;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 120px auto;
+            padding: 30px;
+            background-color: #1a1a2e;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #ff8906;
+            object-fit: cover;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+
+        h2 {
+            color: #fffffe;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #a7a9be;
+            margin: 8px 0;
+        }
+
+        .favorite-playlists {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .favorite-playlists h3 {
+            color: #fffffe;
+            border-bottom: 2px solid #ff8906;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .playlist {
+            background: #2a2a4a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .playlist:hover {
+            background: #ff8906;
+            color: #0f0e17;
+            transform: translateX(5px);
+        }
+
+        .playlist p {
+            color: inherit;
+            margin: 0;
+        }
+
+        .playlist-count {
+            background: #1a1a2e;
+            color: #fffffe;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .playlist:hover .playlist-count {
+            background: #0f0e17;
+            color: #fffffe;
+        }
+
+        .profile-actions {
+            margin: 25px 0;
+        }
+
+        .update-btn {
+            background: #ff8906;
+            color: #0f0e17;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .update-btn:hover {
+            background: #e53170;
+            color: #fffffe;
+            transform: scale(1.05);
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: #e53170;
+            border: 2px solid #e53170;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #e53170;
+            color: #fffffe;
+            transform: scale(1.05);
+        }
+
+        #profile-upload {
+            display: none;
+        }
+
+        .empty-state {
+            color: #a7a9be;
+            font-style: italic;
+            padding: 20px;
+            background: #2a2a4a;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 100px 20px;
+                padding: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/Users/yash/Downloads/image/iconn.jpg" alt="Harmony Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <img id="profile-pic" src="" alt="Profile Picture" class="profile-pic">
+        <h2 id="username">Harmony User</h2>
+        <p id="email">Email: loading...</p>
+        <p id="member-since">Member since: loading...</p>
+        
+        <div class="profile-actions">
+            <input type="file" id="profile-upload" accept="image/*">
+            <button class="update-btn" onclick="document.getElementById('profile-upload').click()">
+                Update Profile Picture
+            </button>
+        </div>
+        
+        <div class="favorite-playlists">
+            <h3>Favorite Playlists</h3>
+            <div id="playlists-container" class="empty-state">
+                Loading your playlists...
+            </div>
+        </div>
+        
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Initialize when DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Profile page loaded");
+            
+            // Check authentication - now checks both flags for compatibility
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
+            
+            if (!isLoggedIn || !loggedInUserEmail) {
+                console.log("No user logged in, redirecting...");
+                window.location.href = "authentication.html";
+                return;
+            }
+
+            // Load user data
+            loadUserProfile(loggedInUserEmail);
+            
+            // Setup event listeners
+            setupEventHandlers();
+        });
+
+        function loadUserProfile(email) {
+            console.log("Loading profile for:", email);
+            
+            try {
+                const userData = localStorage.getItem(email);
+                if (!userData) {
+                    throw new Error("User data not found");
+                }
+                
+                const user = JSON.parse(userData);
+                console.log("User data:", user);
+                
+                if (!user || typeof user !== "object") {
+                    throw new Error("Invalid user data format");
+                }
+
+                // Update profile information
+                document.getElementById("username").textContent = user.name || "Harmony User";
+                document.getElementById("email").textContent = `Email: ${user.email || "Not provided"}`;
+                document.getElementById("member-since").textContent = `Member since: ${user.memberSince || "recently"}`;
+                
+                // Set profile picture with fallback
+                const defaultPic = "https://via.placeholder.com/150/1a1a2e/ffffff?text=Harmony";
+                document.getElementById("profile-pic").src = user.profilePic || defaultPic;
+                
+                // Load favorites
+                loadFavoritePlaylists();
+                
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                showNotification("Error loading profile data");
+                logout();
+            }
+        }
+
+        function setupEventHandlers() {
+            // Profile picture upload
+            document.getElementById("profile-upload").addEventListener("change", handleProfileUpload);
+            
+            // Add other event listeners as needed
+        }
+
+        function handleProfileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate image file
+            if (!file.type.match('image.*')) {
+                showNotification("Please select an image file (JPEG, PNG)");
+                return;
+            }
+
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                showNotification("Image too large (max 2MB)");
+                return;
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
+                if (!loggedInUserEmail) {
+                    showNotification("Session expired, please log in again");
+                    return;
+                }
+
+                try {
+                    // Update user data
+                    const user = JSON.parse(localStorage.getItem(loggedInUserEmail)) || {};
+                    user.profilePic = e.target.result;
+                    
+                    // Save updated user data
+                    localStorage.setItem(loggedInUserEmail, JSON.stringify(user));
+                    
+                    // Update UI
+                    document.getElementById("profile-pic").src = e.target.result;
+                    showNotification("Profile picture updated successfully!");
+                    
+                } catch (error) {
+                    console.error("Error updating profile picture:", error);
+                    showNotification("Failed to update profile picture");
+                }
+            };
+            
+            reader.onerror = function() {
+                showNotification("Error reading image file");
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function loadFavoritePlaylists() {
+            console.log("Loading favorite playlists...");
+            
+            const playlistsContainer = document.getElementById("playlists-container");
+            playlistsContainer.innerHTML = "";
+            
+            try {
+                const favorites = JSON.parse(localStorage.getItem("harmonyFavorites")) || [];
+                console.log("Found favorites:", favorites);
+                
+                if (favorites.length === 0) {
+                    playlistsContainer.innerHTML = `
+                        <div class="empty-state">
+                            You haven't added any favorites yet.
+                            <br>
+                            <a href="browse.html" style="color: #ff8906;">Discover music</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Group by playlist (or create default if none)
+                const playlists = {};
+                favorites.forEach(song => {
+                    const playlistName = song.playlist || "My Favorites";
+                    if (!playlists[playlistName]) {
+                        playlists[playlistName] = [];
+                    }
+                    playlists[playlistName].push(song);
+                });
+                
+                // Create playlist elements
+                Object.entries(playlists).forEach(([name, songs]) => {
+                    const playlistElement = document.createElement("div");
+                    playlistElement.className = "playlist";
+                    playlistElement.innerHTML = `
+                        <p>${name}</p>
+                        <span class="playlist-count">${songs.length} song${songs.length !== 1 ? 's' : ''}</span>
+                    `;
+                    
+                    playlistElement.addEventListener("click", () => {
+                        localStorage.setItem("harmonySelectedPlaylist", name);
+                        window.location.href = "favorites.html";
+                    });
+                    
+                    playlistsContainer.appendChild(playlistElement);
+                });
+                
+            } catch (error) {
+                console.error("Error loading favorites:", error);
+                playlistsContainer.innerHTML = `
+                    <div class="empty-state">
+                        Error loading your favorites.
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            console.log("Logging out...");
+            // Clear all auth-related items
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("harmonyLoggedInUser");
+            window.location.href = "authentication.html";
+        }
+
+        function showNotification(message, isSuccess = true) {
+            const notification = document.createElement("div");
+            notification.style.position = "fixed";
+            notification.style.bottom = "20px";
+            notification.style.left = "50%";
+            notification.style.transform = "translateX(-50%)";
+            notification.style.backgroundColor = isSuccess ? "#ff8906" : "#e53170";
+            notification.style.color = "#0f0e17";
+            notification.style.padding = "12px 24px";
+            notification.style.borderRadius = "20px";
+            notification.style.zIndex = "1000";
+            notification.style.boxShadow = "0 3px 10px rgba(0,0,0,0.3)";
+            notification.style.fontWeight = "600";
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transition = "opacity 0.5s ease";
+                notification.style.opacity = "0";
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

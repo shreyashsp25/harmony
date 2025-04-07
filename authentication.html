@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony - Authentication</title>
+    <style>
+        .auth-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0f0e17; /* Deep navy background */
+            color: #fffffe; /* Off-white text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .auth-container {
+            background-color: #1a1a2e; /* Dark navy */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 350px;
+            border: 1px solid #2a2a4a;
+        }
+        
+        h1 {
+            color: #ff8906; /* Vibrant orange */
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        input {
+            padding: 14px;
+            margin: 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2a4a;
+            color: #fffffe;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: 2px solid #ff8906;
+            background-color: #2f2f4f;
+        }
+        
+        input::placeholder {
+            color: #a7a9be; /* Light gray */
+        }
+        
+        .password-container {
+            display: flex;
+            align-items: center;
+            background-color: #2a2a4a;
+            border-radius: 6px;
+            padding-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .password-container:focus-within {
+            outline: 2px solid #ff8906;
+            background-color: #2f2f4f;
+        }
+        
+        .password-container input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            padding: 14px;
+            outline: none;
+        }
+        
+        .password-container button {
+            background: none;
+            border: none;
+            color: #eebbc3; /* Soft pink */
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 8px;
+            transition: color 0.3s;
+        }
+        
+        .password-container button:hover {
+            color: #ff8906;
+        }
+        
+        button[type="submit"] {
+            padding: 14px;
+            background-color: #ff8906; /* Orange */
+            border: none;
+            border-radius: 6px;
+            color: #0f0e17;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #e53170; /* Pink */
+            transform: translateY(-2px);
+        }
+        
+        p {
+            margin-top: 20px;
+            color: #a7a9be;
+        }
+        
+        a {
+            color: #ff8906;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #e53170;
+            text-decoration: underline;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .auth-container {
+                width: 85%;
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1 id="auth-title">Welcome to Harmony</h1>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <div class="password-container">
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="button" onclick="togglePassword('loginPassword')">👁️</button>
+            </div>
+            <a onclick="forgotPassword()">Forgot Password?</a>
+            <button type="submit">Log In</button>
+        </form>
+
+        <!-- Registration Form (Hidden Initially) -->
+        <!-- In authentication.html, update the registerForm -->
+<form id="registerForm" class="hidden">
+    <input type="text" id="regName" placeholder="Full Name" required>
+    <input type="email" id="regEmail" placeholder="Email" required>
+    <div class="password-container">
+        <input type="password" id="regPassword" placeholder="Password" required>
+        <button type="button" onclick="togglePassword('regPassword')">👁️</button>
+    </div>
+    <button type="submit">Create Account</button>
+</form>
+
+        <p id="toggle-auth">New to Harmony? <a onclick="toggleForms()">Sign up now</a></p>
+    </div>
+
+    <script>
+        // Check for existing session on page load
+        function checkExistingSession() {
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                window.location.href = "index.html";
+            }
+        }
+        checkExistingSession();
+
+        function toggleForms() {
+            const loginForm = document.getElementById("loginForm");
+            const registerForm = document.getElementById("registerForm");
+            const authTitle = document.getElementById("auth-title");
+            const toggleText = document.getElementById("toggle-auth");
+    
+            if (loginForm.classList.contains("hidden")) {
+                loginForm.classList.remove("hidden");
+                registerForm.classList.add("hidden");
+                authTitle.innerText = "Welcome to Harmony";
+                toggleText.innerHTML = "New to Harmony? <a onclick='toggleForms()'>Sign up now</a>";
+            } else {
+                loginForm.classList.add("hidden");
+                registerForm.classList.remove("hidden");
+                authTitle.innerText = "Create Your Account";
+                toggleText.innerHTML = "Already have an account? <a onclick='toggleForms()'>Log in</a>";
+            }
+        }
+    
+        function togglePassword(id) {
+            const passwordField = document.getElementById(id);
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+    
+        function forgotPassword() {
+            const email = prompt("Enter your registered email:");
+            if (!email) return;
+    
+            const storedUser = JSON.parse(localStorage.getItem(email));
+            if (storedUser) {
+                const newPassword = prompt("Enter your new password:");
+                if (newPassword) {
+                    storedUser.password = newPassword;
+                    localStorage.setItem(email, JSON.stringify(storedUser));
+                    alert("Password reset successful! You can now log in.");
+                }
+            } else {
+                alert("Email not found! Please register.");
+            }
+        }
+    
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById("regName").value;
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPassword").value;
+            
+            const user = { 
+                name,
+                email, 
+                password, 
+                memberSince: new Date().toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    year: 'numeric' 
+                }),
+                profilePic: "/Users/yash/Downloads/default-profile.jpg"
+            };
+
+            if (localStorage.getItem(email)) {
+                alert("Email already registered. Please log in.");
+            } else {
+                localStorage.setItem(email, JSON.stringify(user));
+                alert("Registration successful! You can now log in.");
+                toggleForms();
+            }
+        });
+    
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = "Authenticating...";
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                const email = document.getElementById("loginEmail").value;
+                const password = document.getElementById("loginPassword").value;
+                const storedUser = JSON.parse(localStorage.getItem(email));
+
+                if (storedUser && storedUser.password === password) {
+                    localStorage.setItem("isLoggedIn", "true");
+                    localStorage.setItem("harmonyLoggedInUser", email); // Consistent key
+                    window.location.href = "index.html";
+                } else {
+                    alert("Invalid email or password. Please try again.");
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

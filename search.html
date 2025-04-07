@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony - Search</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f0e17; /* Deep navy background */
+            color: #fffffe; /* Off-white text */
+            text-align: center;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #1a1a2e; /* Dark navy */
+            padding: 15px 40px;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .search-container {
+            margin-top: 120px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        input[type="text"] {
+            width: 60%;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: none;
+            background: #2a2a4a;
+            color: #fffffe;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        input[type="text"]::placeholder {
+            color: #a7a9be;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #ff8906; /* Vibrant orange */
+            color: #0f0e17;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            background-color: #e53170; /* Pink */
+            transform: translateY(-2px);
+        }
+        
+        .results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        .song {
+            background: #1f1f3d; /* Dark purple */
+            padding: 20px;
+            border-radius: 12px;
+            width: 220px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .song:hover {
+            background: #2a2a4a;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .song img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .song h3 {
+            margin: 15px 0 8px;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #fffffe;
+        }
+        
+        .song p {
+            margin: 0;
+            color: #a7a9be;
+            font-size: 15px;
+        }
+        
+        .login-btn {
+            text-decoration: none;
+            color: #fffffe;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #ff8906;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ff8906;
+            color: #0f0e17;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 90%;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #eebbc3; /* Soft pink */
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 10px;
+            display: block;
+        }
+        
+        nav ul li a:hover {
+            color: #ff8906; /* Orange */
+        }
+        
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1f1f3d;
+            border-radius: 0 0 12px 12px;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            text-align: left;
+            border-bottom: 1px solid #2a2a4a;
+            transition: background-color 0.3s;
+        }
+        
+        .suggestion-item:hover {
+            background: #2a2a4a;
+        }
+        
+        .suggestion-highlight {
+            color: #ff8906;
+            font-weight: 600;
+        }
+        
+        #now-playing {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 30px auto;
+            max-width: 350px;
+            background: #1f1f3d;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        #now-playing img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        
+        #now-playing div {
+            text-align: left;
+        }
+        
+        #now-playing strong {
+            color: #fffffe;
+            font-size: 16px;
+            display: block;
+        }
+        
+        #now-playing small {
+            color: #a7a9be;
+            font-size: 14px;
+        }
+        
+        #audio-player {
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            border-radius: 8px;
+            background: #1f1f3d;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            input[type="text"], .suggestions {
+                width: 80%;
+            }
+            
+            .song {
+                width: 160px;
+            }
+            
+            .song img {
+                width: 140px;
+                height: 140px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            input[type="text"], .suggestions {
+                width: 90%;
+            }
+            
+            button {
+                margin-top: 10px;
+                margin-left: 0;
+                width: 90%;
+            }
+            
+            .song {
+                width: 140px;
+            }
+            
+            .song img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        .logo img {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="/Users/yash/Downloads/image/iconn.jpg" alt="Harmony Logo">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" onclick="logout()" class="login-btn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for songs or artists..." autocomplete="off">
+        <button onclick="searchMusic()">Search</button>
+        <div class="suggestions" id="suggestions"></div>
+    </div>
+    
+    <div class="results" id="resultsContainer">
+        <p style="color: #a7a9be;">Search results will appear here...</p>
+    </div>
+    
+    <div id="now-playing">
+        <img src="" alt="Now playing cover">
+        <div>
+            <strong>No song selected</strong>
+            <small>Select a song to play</small>
+        </div>
+    </div>
+    
+    <audio id="audio-player" controls></audio>
+    
+    <script>
+        function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("currentUser");
+    window.location.href = "authentication.html";
+}
+        // Music data
+        
+        const playlists = [
+            {
+                name: "Songs",
+                songs: [
+                    { title: "Appangal-Embadum", artist: "Kannur Seenath", file: "/Users/yash/Downloads/songs/Appangal-Embadum.mp3", cover: "/Users/yash/Downloads/image/bangaloredays.jpg" },
+                    { title: "Darshana", artist: "Hesham Abdul Wahab", file: "/Users/yash/Downloads/songs/Darshana Hridayam 128 Kbps.mp3", cover: "/Users/yash/Downloads/image/hridyam.jpg" },
+                    { title: "Imaigalo", artist: "AniVee", file: "/Users/yash/Downloads/songs/Imaigalo Anivee 128 Kbps.mp3", cover: "/Users/yash/Downloads/image/imaiglo.jpg" },
+                    { title: "Welcome To Hyderabad", artist: "Vishnu Vijay", file: "/Users/yash/Downloads/songs/Welcome To Hyderabad.mp3", cover: "/Users/yash/Downloads/image/premalu.jpg" },
+                    { title: "Aa Seetadevi Navvula", artist: "Arijit Singh", file: "/Users/yash/Downloads/songs/Aa Seetadevi Navvula - (Raag.Fm).mp3", cover: "/Users/yash/Downloads/image/rowdyfellow.jpg" },
+                    { title: "Aagi Aagi", artist: "Anurag Kulkarni", file: "/Users/yash/Downloads/songs/Aagi Aagi - SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/ene.jpg" },
+                    { title: "Aakasam Baddalaina", artist: "Sagar", file: "/Users/yash/Downloads/songs/Aakasam Baddalaina-SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/mr.jpg" },
+                    { title: "Em Sandheham Ledhu", artist: "Kalyani Malik", file: "/Users/yash/Downloads/songs/Em Sandheham Ledhu-SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/Oohalu_Gusagusalade_poster.jpg" },
+                    { title: "blue", artist: "yung kai", file: "/Users/yash/Downloads/songs/yung kai - blue (Official Audio) [ ezmp3.cc ].mp3", cover: "/Users/yash/Downloads/image/blue.jpg" },
+                    { title: "Wonderwall", artist: "Oasis", file: "/Users/yash/Downloads/songs/Wonderwall (PenduJatt.Com.Se).mp3", cover: "/Users/yash/Downloads/image/wonder.jpg" },
+                    { title: "Blinding-Lights", artist: "The Weeknd", file: "/Users/yash/Downloads/songs/The-Weeknd-Blinding-Lights.mp3", cover: "/Users/yash/Downloads/image/blinding.jpg" },
+                    { title: "sailor", artist: "Gigi Perez", file: "/Users/yash/Downloads/songs/Sailor Song - Gigi Perez.mp3", cover: "/Users/yash/Downloads/image/sailor.jpg" },
+                    { title: "Ordinary", artist: "Alex Warren", file: "/Users/yash/Downloads/songs/Alex warren - Ordinary.mp3", cover: "/Users/yash/Downloads/image/ordinary.jpg" },
+                    { title: "That's so true", artist: "Gracie Abrams", file: "/Users/yash/Downloads/songs/That_s So True - Gracie Abrams.mp3", cover: "/Users/yash/Downloads/image/thatsotrue.jpg" },
+                    { title: "Messy", artist: "Lola Young", file: "/Users/yash/Downloads/songs/Messy - Lola Young.mp3", cover: "/Users/yash/Downloads/image/messy.jpg" },
+                    { title: "Die with smile", artist: "Lady gaga", file: "/Users/yash/Downloads/songs/Die With A Smile-(SambalpuriStar.In).mp3", cover: "/Users/yash/Downloads/image/diewithsmile.jpg" },
+                    { title: "Anxiety", artist: "Docheii", file: "/Users/yash/Downloads/songs/Doechii - Anxiety (Visualizer).mp3", cover: "/Users/yash/Downloads/image/anxiety.jpg" },
+                    { title: "Thillana", artist: "Dhanashree", file: "/Users/yash/Downloads/songs/Thillana 2 0 - Dhanashree (PenduJatt.Com.Se).mp3", cover: "/Users/yash/Downloads/image/thillana.jpg" },
+                    { title: "Malare", artist: "Ninne", file: "/Users/yash/Downloads/songs/Malare-Ninne.mp3", cover: "/Users/yash/Downloads/image/malare.jpg" },
+                    { title: "Kamalakucha", artist: "Choochuka", file: "/Users/yash/Downloads/songs/Kamalakucha-Choochuka-Kunkumatho.mp3", cover: "/Users/yash/Downloads/image/kamalakucha.jpg" },
+                    { title: "Ritha Dhamava", artist: "bhomee", file: "/Users/yash/Downloads/songs/Ritha Dhamava (PenduJatt.Com.Se).mp3", cover: "/Users/yash/Downloads/image/ritha.jpg" },
+                    { title: "Madhava-Mamava", artist: "Deva", file: "/Users/yash/Downloads/songs/Madhava-Mamava-Deva.mp3", cover: "/Users/yash/Downloads/image/madava.jpg" },
+                    { title: "Beast Mode", artist: "Artist C", file: "/Users/yash/Downloads/songs/Beast Mode Beast 128 Kbps.mp3", cover: "/Users/yash/Downloads/image/beast.jpg" },
+            { title: "Bhaga Bhaga", artist: "Artist C", file: "/Users/yash/Downloads/songs/Bhaga Bhaga.mp3", cover: "/Users/yash/Downloads/image/bhaga.jpg" },
+            { title: "Hungry Cheetah", artist: "Artist C", file: "/Users/yash/Downloads/songs/Hungry Cheetah(KoshalWorld.Com).mp3", cover: "/Users/yash/Downloads/image/hungry.jpg" },
+            { title: "Rise Of Sultan", artist: "Artist C", file: "/Users/yash/Downloads/songs/Rise Of Sultan - Sultan 128 Kbps.mp3", cover: "/Users/yash/Downloads/image/sultan.jpg" },
+            { title: "Zinda", artist: "Artist C", file: "/Users/yash/Downloads/songs/Zinda - Bhaag Milkha Bhaag 128 Kbps.mp3", cover: "/Users/yash/Downloads/image/zinda.jpg" },
+            { title: "Paruvam Vanaga", artist: "Artist D", file: "/Users/yash/Downloads/songs/04 - Paruvam Vanaga - SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/paruvam.jpg" },
+            { title: "Aamani", artist: "Artist D", file: "/Users/yash/Downloads/songs/04 -  Aamani [www.SenSongsMp3.co].mp3", cover: "/Users/yash/Downloads/image/aamani.jpg" },
+            { title: "Chinni Chinni Aasa", artist: "Artist D", file: "/Users/yash/Downloads/songs/01 - Chinni Chinni Aasa - SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/paruvam.jpg" },
+            { title: "Yamuna Teeram", artist: "Artist D", file: "/Users/yash/Downloads/songs/Yamuna Teeram.mp3", cover: "/Users/yash/Downloads/image/yamuna.jpg" },
+            { title: "Naa Cheli Rojave", artist: "Artist D", file: "/Users/yash/Downloads/songs/03 - Naa Cheli Rojave - SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/paruvam.jpg" },
+            { title: "Blockbuster", artist: "Artist E", file: "/Users/yash/Downloads/songs/Blockbuster - SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/blockbuster.jpg" },
+            { title: "Illuminati", artist: "Artist E", file: "/Users/yash/Downloads/songs/Illuminati(KoshalWorld.Com).mp3", cover: "/Users/yash/Downloads/image/illumanati.jpg" },
+            { title: "Time To Party", artist: "Artist E", file: "/Users/yash/Downloads/songs/Time To Party -SenSongsMp3.Co.mp3", cover: "/Users/yash/Downloads/image/time.jpg" },
+            { title: "Aadharanjali", artist: "Artist E", file: "/Users/yash/Downloads/songs/Aadharanjali.mp3", cover: "/Users/yash/Downloads/image/adranjali.jpg" },
+            { title: "Kuthanthram", artist: "Artist E", file: "/Users/yash/Downloads/songs/Kuthanthram(KoshalWorld.Com).mp3", cover: "/Users/yash/Downloads/image/kuthantram.jpg" }
+                ]
+            }
+        ]
+
+
+        // Get all songs from all playlists
+        function getAllSongs() {
+            let allSongs = [];
+            playlists.forEach(playlist => {
+                allSongs = allSongs.concat(playlist.songs);
+            });
+            return allSongs;
+        }
+
+        // Highlight matching text in suggestions
+        function highlightMatch(text, query) {
+            const index = text.toLowerCase().indexOf(query.toLowerCase());
+            if (index >= 0) {
+                return text.substring(0, index) + 
+                       `<span class="suggestion-highlight">${text.substring(index, index + query.length)}</span>` + 
+                       text.substring(index + query.length);
+            }
+            return text;
+        }
+
+        // Show search suggestions
+        function showSuggestions(query) {
+            const suggestionsContainer = document.getElementById('suggestions');
+            const allSongs = getAllSongs();
+            
+            if (!query) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            const matchingSongs = allSongs.filter(song => 
+                song.title.toLowerCase().includes(query.toLowerCase()) || 
+                song.artist.toLowerCase().includes(query.toLowerCase())
+            ).slice(0, 5);
+            
+            if (matchingSongs.length > 0) {
+                let suggestionsHTML = '';
+                matchingSongs.forEach(song => {
+                    suggestionsHTML += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}', '${song.cover}', '${song.file}')">
+                            <div>${highlightMatch(song.title, query)}</div>
+                            <small>${highlightMatch(song.artist, query)}</small>
+                        </div>
+                    `;
+                });
+                suggestionsContainer.innerHTML = suggestionsHTML;
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        }
+
+        // Select a suggestion
+        function selectSuggestion(title, artist, cover, file) {
+            document.getElementById('searchInput').value = title;
+            document.getElementById('suggestions').style.display = 'none';
+            playSong(title, artist, cover, file);
+        }
+
+        // Search music function
+        function searchMusic() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const resultsContainer = document.getElementById("resultsContainer");
+            const suggestionsContainer = document.getElementById("suggestions");
+            
+            if (!query) {
+                resultsContainer.innerHTML = "<p style='color:#a7a9be;'>Please enter a search term</p>";
+                return;
+            }
+            
+            resultsContainer.innerHTML = "<p style='color:#a7a9be;'>Searching...</p>";
+            suggestionsContainer.style.display = 'none';
+            
+            const allSongs = getAllSongs();
+            const matchingSongs = allSongs.filter(song => 
+                song.title.toLowerCase().includes(query) || 
+                song.artist.toLowerCase().includes(query)
+            );
+            
+            if (matchingSongs.length > 0) {
+                let resultsHTML = "";
+                matchingSongs.forEach(song => {
+                    resultsHTML += `
+                        <div class='song' onclick="playSong('${song.title}', '${song.artist}', '${song.cover}', '${song.file}')">
+                            <img src='${song.cover}' alt='${song.title}'>
+                            <h3>${song.title}</h3>
+                            <p>${song.artist}</p>
+                        </div>
+                    `;
+                });
+                resultsContainer.innerHTML = resultsHTML;
+            } else {
+                resultsContainer.innerHTML = `<p style='color:#a7a9be;'>No results found for "${query}"</p>`;
+            }
+        }
+
+        // Play selected song
+        function playSong(title, artist, cover, file) {
+            const audioPlayer = document.getElementById('audio-player');
+            const nowPlaying = document.getElementById('now-playing');
+            
+            // Update now playing display
+            nowPlaying.querySelector('img').src = cover;
+            nowPlaying.querySelector('img').alt = title;
+            nowPlaying.querySelector('strong').textContent = title;
+            nowPlaying.querySelector('small').textContent = artist;
+            
+            // Set and play audio
+            audioPlayer.src = file;
+            audioPlayer.play().catch(e => {
+                console.error("Playback failed:", e);
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById("searchInput");
+            const suggestionsContainer = document.getElementById("suggestions");
+            
+            searchInput.addEventListener("input", function() {
+                showSuggestions(this.value);
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target)) {
+                    suggestionsContainer.style.display = 'none';
+                }
+            });
+            
+            searchInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    searchMusic();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

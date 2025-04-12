@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harmony - Favorites</title>
+    <title>Harmony - Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #0f0e17;
             color: #fffffe;
+            padding-bottom: 120px; /* Space for playbar */
         }
         
         header {
@@ -28,18 +29,18 @@
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        
+
         .logo img {
             height: 50px;
         }
-        
+
         nav {
             width: 100%;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
-        
+
         nav ul {
             list-style: none;
             display: flex;
@@ -47,124 +48,168 @@
             justify-content: space-evenly;
             width: 90%;
             padding: 0;
-            margin: 0;
+            margin: 10px 0 0;
         }
-        
+
         nav ul li {
             display: inline;
         }
-        
+
         nav ul li a {
             text-decoration: none;
             color: #eebbc3;
-            font-weight: 600;
+            font-weight: 500;
             transition: color 0.3s;
             padding: 10px;
             display: block;
         }
-        
+
         nav ul li a:hover {
             color: #ff8906;
         }
-        
-        .favorites {
-            padding: 120px 20px 150px;
+
+        .profile-container {
+            max-width: 600px;
+            margin: 150px auto 100px;
+            padding: 30px;
+            background-color: #1a1a2e;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             text-align: center;
-        }
-        
-        .song-container {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .song {
-            background: #1f1f3d;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s;
-            width: 200px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .song:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-            background: #2a2a4a;
-        }
-        
-        .song img {
-            width: 160px;
-            height: 160px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        
-        .song h3 {
-            margin: 15px 0 5px;
-            font-size: 18px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #fffffe;
-        }
-        
-        .empty-message {
-            color: #a7a9be;
-            font-style: italic;
-            margin-top: 50px;
-            font-size: 18px;
-        }
-        
-        .login-btn {
-            text-decoration: none;
-            color: #fffffe;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 2px solid #ff8906;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            background-color: #ff8906;
-            color: #0f0e17;
-        }
-        
-        /* Remove button styling */
-        .remove-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #e53170;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 14px;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .song:hover .remove-btn {
-            opacity: 1;
-        }
-        
-        .remove-btn:hover {
-            background-color: #ff1a5e;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Enhanced Music Player */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #ff8906;
+            object-fit: cover;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+
+        h2 {
+            color: #fffffe;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #a7a9be;
+            margin: 8px 0;
+        }
+
+        .favorite-playlists {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .favorite-playlists h3 {
+            color: #fffffe;
+            border-bottom: 2px solid #ff8906;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .playlist {
+            background: #2a2a4a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .playlist:hover {
+            background: #ff8906;
+            color: #0f0e17;
+            transform: translateX(5px);
+        }
+
+        .playlist p {
+            color: inherit;
+            margin: 0;
+        }
+
+        .playlist-count {
+            background: #1a1a2e;
+            color: #fffffe;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .playlist:hover .playlist-count {
+            background: #0f0e17;
+            color: #fffffe;
+        }
+
+        .profile-actions {
+            margin: 25px 0;
+        }
+
+        .update-btn {
+            background: #ff8906;
+            color: #0f0e17;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .update-btn:hover {
+            background: #e53170;
+            color: #fffffe;
+            transform: scale(1.05);
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: #e53170;
+            border: 2px solid #e53170;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #e53170;
+            color: #fffffe;
+            transform: scale(1.05);
+        }
+
+        #profile-upload {
+            display: none;
+        }
+
+        .empty-state {
+            color: #a7a9be;
+            font-style: italic;
+            padding: 20px;
+            background: #2a2a4a;
+            border-radius: 8px;
+        }
+
+        /* Enhanced Music Player - Matching the search page */
         .player-container {
             position: fixed;
             bottom: 0;
@@ -180,18 +225,18 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-
+        
         .player-container:hover {
             background-color: rgba(26, 26, 46, 0.98);
         }
-
+        
         .player-info {
             display: flex;
             align-items: center;
             min-width: 200px;
             width: 25%;
         }
-
+        
         #song-cover {
             width: 50px;
             height: 50px;
@@ -201,22 +246,33 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
-
+        
         #song-cover.playing {
             animation: rotateCover 20s linear infinite;
         }
-
+        
         @keyframes rotateCover {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
+        
         .song-details {
             text-align: left;
             overflow: hidden;
             white-space: nowrap;
         }
-
+        
+        .song-details .marquee {
+            display: inline-block;
+            animation: marquee 10s linear infinite;
+            padding-left: 100%;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
         #song-title {
             margin: 0;
             font-size: 14px;
@@ -225,7 +281,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
+        
         #song-artist {
             margin: 0;
             font-size: 12px;
@@ -233,7 +289,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
+        
         .player-controls {
             display: flex;
             flex-direction: column;
@@ -241,7 +297,7 @@
             flex-grow: 1;
             max-width: 50%;
         }
-
+        
         .progress-container {
             width: 100%;
             height: 4px;
@@ -251,11 +307,11 @@
             cursor: pointer;
             transition: height 0.2s;
         }
-
+        
         .progress-container:hover {
             height: 6px;
         }
-
+        
         #progress-bar {
             height: 100%;
             width: 0%;
@@ -264,7 +320,7 @@
             transition: width 0.1s;
             position: relative;
         }
-
+        
         #progress-bar::after {
             content: '';
             position: absolute;
@@ -278,11 +334,11 @@
             opacity: 0;
             transition: opacity 0.2s;
         }
-
+        
         .progress-container:hover #progress-bar::after {
             opacity: 1;
         }
-
+        
         .time-info {
             display: flex;
             justify-content: space-between;
@@ -291,14 +347,14 @@
             color: #a7a9be;
             margin-top: 2px;
         }
-
+        
         .controls {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-top: 5px;
         }
-
+        
         .controls button {
             background: none;
             border: none;
@@ -311,45 +367,45 @@
             align-items: center;
             justify-content: center;
         }
-
+        
         .controls button i {
             font-size: 18px;
         }
-
+        
         #play-pause-btn {
             background: rgba(255, 137, 6, 0.2);
             width: 40px;
             height: 40px;
         }
-
+        
         #play-pause-btn:hover {
             background: rgba(255, 137, 6, 0.4);
             transform: scale(1.05);
         }
-
+        
         .controls button:not(#play-pause-btn):hover {
             color: #ff8906;
             transform: scale(1.1);
         }
-
+        
         .player-right {
             display: flex;
             align-items: center;
             width: 25%;
             justify-content: flex-end;
-            gap: 15px;
         }
-
+        
         .volume-container {
             display: flex;
             align-items: center;
             width: 120px;
+            margin-left: 20px;
         }
-
+        
         .volume-container button {
             margin-right: 8px;
         }
-
+        
         #volume-slider {
             width: 80px;
             height: 4px;
@@ -358,7 +414,7 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
+        
         #volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 12px;
@@ -369,42 +425,91 @@
             opacity: 0;
             transition: opacity 0.2s;
         }
-
+        
         .volume-container:hover #volume-slider::-webkit-slider-thumb {
             opacity: 1;
         }
-
+        
         /* Like Button Styles */
         .like-btn {
             background: none;
             border: none;
             cursor: pointer;
             font-size: 18px;
+            margin-left: 10px;
             padding: 0;
             color: #a7a9be;
             transition: all 0.3s;
-            flex-shrink: 0;
         }
-
+        
         .like-btn:hover {
             color: #e53170;
         }
-
+        
         .liked {
             color: #e53170 !important;
         }
         
-        /* Responsive design */
+        /* Toast notification */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #ff8906;
+            color: #0f0e17;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 100px;
+            transform: translateX(-50%);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Animations */
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shrink {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.7); }
+            100% { transform: scale(1); }
+        }
+        
+        .like-btn.liked {
+            animation: heartBeat 0.5s;
+        }
+        
+        .like-btn.unliked {
+            animation: shrink 0.3s;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .song {
-                width: 160px;
+            .profile-container {
+                margin: 120px 20px 120px;
+                padding: 20px;
             }
             
-            .song img {
-                width: 140px;
-                height: 140px;
+            nav ul {
+                flex-direction: column;
+                align-items: center;
             }
-
+            
             .player-info, .player-right {
                 width: 30%;
             }
@@ -414,21 +519,12 @@
             }
         }
         
-        @media (max-width: 480px) {
-            .favorites {
-                padding: 100px 15px 120px;
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .song {
-                width: 140px;
-                padding: 15px;
-            }
-            
-            .song img {
-                width: 120px;
-                height: 120px;
-            }
-
             .player-container {
                 flex-direction: column;
                 height: auto;
@@ -454,37 +550,48 @@
 </head>
 <body>
     <header>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
+        </div>
         <nav>
-            <div class="logo">
-                <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
-            </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="browse.html">Browse</a></li>
                 <li><a href="search.html">Search</a></li>
                 <li><a href="favorites.html">Favorites</a></li>
                 <li><a href="profile.html">Profile</a></li>
-                <li><a href="#" onclick="logout()" class="login-btn">Logout</a></li>
+                <li><button class="logout-btn" onclick="logout()">Logout</button></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="favorites">
-            <h1>Your Favorite Songs</h1>
-            <div class="song-container" id="songContainer">
-                <!-- Songs will be dynamically added here -->
+    <div class="profile-container">
+        <img id="profile-pic" src="" alt="Profile Picture" class="profile-pic">
+        <h2 id="username">Harmony User</h2>
+        <p id="email">Email: loading...</p>
+        <p id="member-since">Member since: loading...</p>
+        
+        <div class="profile-actions">
+            <input type="file" id="profile-upload" accept="image/*">
+            <button class="update-btn" onclick="document.getElementById('profile-upload').click()">
+                Update Profile Picture
+            </button>
+        </div>
+        
+        <div class="favorite-playlists">
+            <h3>Favorite Playlists</h3>
+            <div id="playlists-container" class="empty-state">
+                Loading your playlists...
             </div>
-            <p id="emptyMessage" class="empty-message" style="display: none;">
-                You haven't liked any songs yet.
-            </p>
-        </section>
-    </main>
-    
-    <!-- Enhanced Music Player -->
+        </div>
+        
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Enhanced Music Player - Matching the search page -->
     <div class="player-container">
         <div class="player-info">
-            <img id="song-cover" src="" alt="Cover">
+            <img id="song-cover" src="default-cover.jpg" alt="Cover">
             <div class="song-details">
                 <h3 id="song-title">No song selected</h3>
                 <p id="song-artist">Select a song to play</p>
@@ -516,9 +623,190 @@
             <button class="like-btn" id="player-like-btn" onclick="toggleCurrentLike()" title="Like"><i class="fas fa-heart"></i></button>
         </div>
     </div>
-    
+
     <script>
-        // Player variables
+        // Initialize when DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Profile page loaded");
+            
+            // Check authentication
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
+            
+            if (!isLoggedIn || !loggedInUserEmail) {
+                console.log("No user logged in, redirecting...");
+                window.location.href = 'authentication.html';
+                return;
+            }
+
+            // Load user data
+            loadUserProfile(loggedInUserEmail);
+            
+            // Setup event listeners
+            setupEventHandlers();
+            
+            // Initialize player
+            initPlayer();
+        });
+
+        function loadUserProfile(email) {
+            console.log("Loading profile for:", email);
+            
+            try {
+                const userData = localStorage.getItem(email);
+                if (!userData) {
+                    throw new Error("User data not found");
+                }
+                
+                const user = JSON.parse(userData);
+                console.log("User data:", user);
+                
+                if (!user || typeof user !== "object") {
+                    throw new Error("Invalid user data format");
+                }
+
+                // Update profile information
+                document.getElementById("username").textContent = user.name || "Harmony User";
+                document.getElementById("email").textContent = `Email: ${user.email || "Not provided"}`;
+                document.getElementById("member-since").textContent = `Member since: ${user.memberSince || "recently"}`;
+                
+                // Set profile picture with fallback
+                const defaultPic = "https://via.placeholder.com/150/1a1a2e/ffffff?text=Harmony";
+                document.getElementById("profile-pic").src = user.profilePic || defaultPic;
+                
+                // Load favorites
+                loadFavoritePlaylists();
+                
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                showToast("Error loading profile data");
+                logout();
+            }
+        }
+
+        function setupEventHandlers() {
+            // Profile picture upload
+            document.getElementById("profile-upload").addEventListener("change", handleProfileUpload);
+        }
+
+        function handleProfileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate image file
+            if (!file.type.match('image.*')) {
+                showToast("Please select an image file (JPEG, PNG)");
+                return;
+            }
+
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("Image too large (max 2MB)");
+                return;
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
+                if (!loggedInUserEmail) {
+                    showToast("Session expired, please log in again");
+                    return;
+                }
+
+                try {
+                    // Update user data
+                    const user = JSON.parse(localStorage.getItem(loggedInUserEmail)) || {};
+                    user.profilePic = e.target.result;
+                    
+                    // Save updated user data
+                    localStorage.setItem(loggedInUserEmail, JSON.stringify(user));
+                    
+                    // Update UI
+                    document.getElementById("profile-pic").src = e.target.result;
+                    showToast("Profile picture updated successfully!");
+                    
+                } catch (error) {
+                    console.error("Error updating profile picture:", error);
+                    showToast("Failed to update profile picture");
+                }
+            };
+            
+            reader.onerror = function() {
+                showToast("Error reading image file");
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function loadFavoritePlaylists() {
+            console.log("Loading favorite playlists...");
+            
+            const playlistsContainer = document.getElementById("playlists-container");
+            playlistsContainer.innerHTML = "";
+            
+            try {
+                const favorites = JSON.parse(localStorage.getItem("harmonyFavorites")) || [];
+                console.log("Found favorites:", favorites);
+                
+                if (favorites.length === 0) {
+                    playlistsContainer.innerHTML = `
+                        <div class="empty-state">
+                            You haven't added any favorites yet.
+                            <br>
+                            <a href="browse.html" style="color: #ff8906;">Discover music</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Group by playlist (or create default if none)
+                const playlists = {};
+                favorites.forEach(song => {
+                    const playlistName = song.playlist || "My Favorites";
+                    if (!playlists[playlistName]) {
+                        playlists[playlistName] = [];
+                    }
+                    playlists[playlistName].push(song);
+                });
+                
+                // Create playlist elements
+                Object.entries(playlists).forEach(([name, songs]) => {
+                    const playlistElement = document.createElement("div");
+                    playlistElement.className = "playlist";
+                    playlistElement.innerHTML = `
+                        <p>${name}</p>
+                        <span class="playlist-count">${songs.length} song${songs.length !== 1 ? 's' : ''}</span>
+                    `;
+                    
+                    playlistElement.addEventListener("click", () => {
+                        localStorage.setItem("harmonySelectedPlaylist", name);
+                        window.location.href = "favorites.html";
+                    });
+                    
+                    playlistsContainer.appendChild(playlistElement);
+                });
+                
+            } catch (error) {
+                console.error("Error loading favorites:", error);
+                playlistsContainer.innerHTML = `
+                    <div class="empty-state">
+                        Error loading your favorites.
+                    </div>
+                `;
+            }
+        }
+
+        // Player state
+        let currentPlaylist = 0;
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffled = false;
+        let isRepeating = false;
+        let isMuted = false;
+        let volumeBeforeMute = 0.7;
+        
+        // DOM elements
         const audioPlayer = new Audio();
         const songTitle = document.getElementById("song-title");
         const songArtist = document.getElementById("song-artist");
@@ -533,15 +821,6 @@
         const repeatBtn = document.getElementById("repeat-btn");
         const likeBtn = document.getElementById("player-like-btn");
 
-        // Player state
-        let currentPlaylist = 0;
-        let currentSongIndex = 0;
-        let isPlaying = false;
-        let isShuffled = false;
-        let isRepeating = false;
-        let isMuted = false;
-        let volumeBeforeMute = 0.7;
-        
         // Initialize player
         function initPlayer() {
             // Set initial volume
@@ -554,6 +833,114 @@
             
             progressContainer.addEventListener('click', setProgress);
             volumeSlider.addEventListener('input', setVolume);
+            
+            // Load current song from localStorage if available
+            const currentSong = JSON.parse(localStorage.getItem("harmonyCurrentSong")) || null;
+            const isPlaying = localStorage.getItem("harmonyIsPlaying") === "true";
+            
+            if (currentSong) {
+                // Find the song in our playlists
+                const songIndex = playlists[0].songs.findIndex(s => 
+                    s.title === currentSong.title && s.artist === currentSong.artist
+                );
+                
+                if (songIndex !== -1) {
+                    currentSongIndex = songIndex;
+                    loadSong(0, songIndex);
+                    if (isPlaying) {
+                        audioPlayer.play();
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    }
+                }
+            } else {
+                // Load first song
+                loadSong(0, 0);
+            }
+        }
+
+        // Load a song
+        function loadSong(pIndex, sIndex) {
+            currentPlaylist = pIndex;
+            currentSongIndex = sIndex;
+            const song = playlists[pIndex].songs[sIndex];
+            
+            // Update UI
+            songTitle.innerText = song.title;
+            songArtist.innerText = song.artist;
+            songCover.src = song.cover;
+            
+            // Load audio
+            audioPlayer.src = song.file;
+            
+            // Update like button
+            updateLikeButton();
+            
+            // Save current song to localStorage
+            localStorage.setItem("harmonyCurrentSong", JSON.stringify({
+                title: song.title,
+                artist: song.artist,
+                albumArt: song.cover,
+                duration: 180 // Default duration for demo
+            }));
+            
+            // Play if was playing before
+            if (isPlaying) {
+                audioPlayer.play()
+                    .then(() => {
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+            }
+        }
+
+        // Play/Pause toggle
+        function playPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play()
+                    .then(() => {
+                        isPlaying = true;
+                        localStorage.setItem("harmonyIsPlaying", "true");
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+                localStorage.setItem("harmonyIsPlaying", "false");
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                songCover.classList.remove('playing');
+            }
+        }
+
+        // Previous song
+        function prevSong() {
+            currentSongIndex--;
+            if (currentSongIndex < 0) {
+                currentSongIndex = playlists[currentPlaylist].songs.length - 1;
+            }
+            loadSong(currentPlaylist, currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Next song
+        function nextSong() {
+            currentSongIndex++;
+            if (currentSongIndex >= playlists[currentPlaylist].songs.length) {
+                currentSongIndex = 0;
+            }
+            loadSong(currentPlaylist, currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
         }
 
         // Update progress bar
@@ -562,9 +949,10 @@
             const progressPercent = (currentTime / duration) * 100;
             progressBar.style.width = `${progressPercent}%`;
             
+            // Update time display
             currentTimeEl.textContent = formatTime(currentTime);
         }
-
+        
         // Set progress bar on click
         function setProgress(e) {
             const width = this.clientWidth;
@@ -573,18 +961,16 @@
             audioPlayer.currentTime = (clickX / width) * duration;
         }
 
-        // Update duration display
-        function updateDuration() {
-            durationEl.textContent = formatTime(audioPlayer.duration);
+        // Format time in mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
-        // Format time (seconds to MM:SS)
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return "0:00";
-            
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        // Update song duration
+        function updateDuration() {
+            durationEl.textContent = formatTime(audioPlayer.duration);
         }
 
         // Song ended
@@ -600,17 +986,12 @@
         // Set volume
         function setVolume() {
             audioPlayer.volume = this.value;
-            
-            // Update volume icon
-            if (this.value == 0) {
-                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                isMuted = true;
-            } else if (this.value < 0.5) {
-                volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-                isMuted = false;
-            } else {
+            if (audioPlayer.volume > 0.5) {
                 volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                isMuted = false;
+            } else if (audioPlayer.volume > 0) {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
             }
         }
 
@@ -619,262 +1000,144 @@
             if (isMuted) {
                 audioPlayer.volume = volumeBeforeMute;
                 volumeSlider.value = volumeBeforeMute;
-                
-                if (volumeBeforeMute < 0.5) {
-                    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-                } else {
+                isMuted = false;
+                if (audioPlayer.volume > 0.5) {
                     volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                } else {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
                 }
             } else {
                 volumeBeforeMute = audioPlayer.volume;
                 audioPlayer.volume = 0;
                 volumeSlider.value = 0;
+                isMuted = true;
                 volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            }
-            isMuted = !isMuted;
-        }
-
-        // Toggle shuffle
-        function shuffle() {
-            isShuffled = !isShuffled;
-            if (isShuffled) {
-                document.querySelector('.controls button:nth-child(1)').style.color = '#ff8906';
-            } else {
-                document.querySelector('.controls button:nth-child(1)').style.color = '#fffffe';
             }
         }
 
         // Toggle repeat
         function repeatToggle() {
             isRepeating = !isRepeating;
-            if (isRepeating) {
-                repeatBtn.style.color = '#ff8906';
+            repeatBtn.style.color = isRepeating ? '#ff8906' : '#fffffe';
+        }
+
+        // Shuffle songs
+        function shuffle() {
+            isShuffled = !isShuffled;
+            if (isShuffled) {
+                // Shuffle the playlist
+                const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+                playlists[currentPlaylist].songs.sort(() => Math.random() - 0.5);
+                
+                // Find the current song in the shuffled array and set it as current
+                const newIndex = playlists[currentPlaylist].songs.findIndex(
+                    song => song.title === currentSong.title && song.artist === currentSong.artist
+                );
+                currentSongIndex = newIndex;
             } else {
-                repeatBtn.style.color = '#fffffe';
+                // Restore original order
+                playlists[currentPlaylist].songs.sort((a, b) => a.title.localeCompare(b.title));
+                
+                // Find the current song in the original array
+                const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+                const originalIndex = playlists[currentPlaylist].songs.findIndex(
+                    song => song.title === currentSong.title && song.artist === currentSong.artist
+                );
+                currentSongIndex = originalIndex;
             }
         }
 
-        // Play/Pause toggle
-        function playPause() {
-            if (audioPlayer.paused) {
-                audioPlayer.play()
-                    .then(() => {
-                        isPlaying = true;
-                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        songCover.classList.add('playing');
-                    })
-                    .catch(e => console.log("Playback failed:", e));
-            } else {
-                audioPlayer.pause();
-                isPlaying = false;
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                songCover.classList.remove('playing');
-            }
-        }
-
-        // Load a song
-        function loadSong(song) {
-            songTitle.textContent = song.title;
-            songArtist.textContent = song.artist || "Unknown Artist";
-            songCover.src = song.cover || "https://via.placeholder.com/50";
-            audioPlayer.src = song.file;
-            
-            // Update like button
-            updateLikeButton();
-            
-            // Play the song if one was playing before
-            if (isPlaying) {
-                audioPlayer.play()
-                    .then(() => {
-                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        songCover.classList.add('playing');
-                    })
-                    .catch(e => console.log("Playback failed:", e));
-            }
-        }
-
-        // Next song
-        function nextSong() {
-            // This would need to be implemented based on your playlist structure
-            console.log("Next song");
-        }
-
-        // Previous song
-        function prevSong() {
-            // This would need to be implemented based on your playlist structure
-            console.log("Previous song");
-        }
-
-        // Toggle like for current song
+        // Like/Unlike current song
         function toggleCurrentLike() {
             likeBtn.classList.toggle('liked');
-            const currentSong = {
-                title: songTitle.textContent,
-                artist: songArtist.textContent,
-                cover: songCover.src,
-                file: audioPlayer.src
-            };
             
-            updateFavorites(currentSong);
+            // Get current user from localStorage
+            const currentUser = JSON.parse(localStorage.getItem('harmonyLoggedInUser'));
+            if (!currentUser) return;
+            
+            // Get favorites from localStorage or initialize
+            const favorites = JSON.parse(localStorage.getItem('harmonyFavorites')) || {};
+            if (!favorites[currentUser]) {
+                favorites[currentUser] = [];
+            }
+            
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            const songId = `${currentSong.title}-${currentSong.artist}`;
+            
+            if (likeBtn.classList.contains('liked')) {
+                // Add to favorites
+                if (!favorites[currentUser].some(s => s.id === songId)) {
+                    favorites[currentUser].push({
+                        id: songId,
+                        title: currentSong.title,
+                        artist: currentSong.artist,
+                        file: currentSong.file,
+                        cover: currentSong.cover
+                    });
+                    showToast('Added to favorites');
+                    likeBtn.classList.add('heartBeat');
+                    setTimeout(() => likeBtn.classList.remove('heartBeat'), 1000);
+                }
+            } else {
+                // Remove from favorites
+                favorites[currentUser] = favorites[currentUser].filter(s => s.id !== songId);
+                showToast('Removed from favorites');
+                likeBtn.classList.add('shrink');
+                setTimeout(() => likeBtn.classList.remove('shrink'), 1000);
+            }
+            
+            localStorage.setItem('harmonyFavorites', JSON.stringify(favorites));
         }
 
-        // Update like button state
+        // Update like button based on current song
         function updateLikeButton() {
-            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            const currentSongFile = audioPlayer.src;
+            const currentUser = localStorage.getItem('harmonyLoggedInUser');
+            if (!currentUser) {
+                likeBtn.classList.remove('liked');
+                return;
+            }
             
-            const isLiked = favorites.some(song => song.file === currentSongFile);
-            if (isLiked) {
+            const favorites = JSON.parse(localStorage.getItem('harmonyFavorites')) || {};
+            if (!favorites[currentUser]) {
+                likeBtn.classList.remove('liked');
+                return;
+            }
+            
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            const songId = `${currentSong.title}-${currentSong.artist}`;
+            
+            if (favorites[currentUser].some(s => s.id === songId)) {
                 likeBtn.classList.add('liked');
             } else {
                 likeBtn.classList.remove('liked');
             }
         }
 
-        // Update favorites in localStorage
-        function updateFavorites(song) {
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            const songIndex = favorites.findIndex(fav => fav.file === song.file);
-            
-            if (songIndex === -1) {
-                favorites.push(song);
-            } else {
-                favorites.splice(songIndex, 1);
-            }
-            
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            displayFavorites(); // Refresh the display
-        }
-
-        // Remove song from favorites
-        function removeFromFavorites(songTitle, event) {
-            event.stopPropagation();
-            
-            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-            favorites = favorites.filter(song => song.title !== songTitle);
-            localStorage.setItem("favorites", JSON.stringify(favorites));
-            
-            // Refresh the display
-            displayFavorites();
-            
-            // Show notification
-            showToast("Removed from favorites");
-            
-            // Update player like button if this was the current song
-            updateLikeButton();
-        }
-
-        // Show toast notification
         function showToast(message) {
-            const toast = document.createElement("div");
-            toast.className = "toast";
+            const toast = document.createElement('div');
+            toast.className = 'toast';
             toast.textContent = message;
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #ff8906;
-                color: #0f0e17;
-                padding: 12px 24px;
-                border-radius: 8px;
-                z-index: 2000;
-                font-weight: 600;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                opacity: 0;
-                transition: opacity 0.5s;
-            `;
-            
             document.body.appendChild(toast);
             
-            // Show toast
             setTimeout(() => {
-                toast.style.opacity = "1";
-            }, 10);
+                toast.classList.add('show');
+            }, 100);
             
-            // Hide after 3 seconds
             setTimeout(() => {
-                toast.style.opacity = "0";
-                setTimeout(() => toast.remove(), 500);
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 500);
             }, 3000);
         }
 
-        // Display favorites
-        function displayFavorites() {
-            const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-            const songContainer = document.getElementById("songContainer");
-            const emptyMessage = document.getElementById("emptyMessage");
-            
-            songContainer.innerHTML = ""; // Clear current display
-            
-            if (favorites.length === 0) {
-                emptyMessage.style.display = "block";
-            } else {
-                emptyMessage.style.display = "none";
-                favorites.forEach((song, index) => {
-                    const songDiv = document.createElement("div");
-                    songDiv.classList.add("song");
-                    
-                    const img = document.createElement("img");
-                    img.src = song.cover || "https://via.placeholder.com/160";
-                    img.alt = song.title;
-                    
-                    const title = document.createElement("h3");
-                    title.textContent = song.title;
-                    
-                    const artist = document.createElement("p");
-                    artist.textContent = song.artist || "Unknown Artist";
-                    
-                    // Add remove button
-                    const removeBtn = document.createElement("button");
-                    removeBtn.classList.add("remove-btn");
-                    removeBtn.innerHTML = "×";
-                    removeBtn.addEventListener("click", (e) => removeFromFavorites(song.title, e));
-                    
-                    songDiv.appendChild(img);
-                    songDiv.appendChild(title);
-                    songDiv.appendChild(artist);
-                    songDiv.appendChild(removeBtn);
-                    songContainer.appendChild(songDiv);
-                    
-                    // Add click handler to play the song
-                    songDiv.addEventListener("click", () => {
-                        loadSong(song);
-                        if (!isPlaying) {
-                            playPause();
-                        }
-                    });
-                });
-            }
-        }
-
-        // Initialize when page loads
-        document.addEventListener("DOMContentLoaded", function() {
-            initPlayer();
-            displayFavorites();
-            
-            // Check if user is logged in
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            if (!isLoggedIn) {
-                window.location.href = 'authentication.html';
-            }
-        });
-
         function logout() {
+            console.log("Logging out...");
+            // Clear all auth-related items
             localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("currentUser");
+            localStorage.removeItem("harmonyLoggedInUser");
             window.location.href = "authentication.html";
         }
-
-        // Make functions available globally
-        window.playPause = playPause;
-        window.loadSong = loadSong;
-        window.shuffle = shuffle;
-        window.prevSong = prevSong;
-        window.nextSong = nextSong;
-        window.repeatToggle = repeatToggle;
-        window.toggleMute = toggleMute;
-        window.toggleCurrentLike = toggleCurrentLike;
     </script>
 </body>
 </html>

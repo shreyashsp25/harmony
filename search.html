@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmony - Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0f0e17; /* Deep navy background */
-            color: #fffffe; /* Off-white text */
-            text-align: center;
+            background-color: #0f0e17;
+            color: #fffffe;
+            display: flex;
+            flex-direction: column;
         }
         
         header {
@@ -19,18 +22,77 @@
             width: 100%;
             top: 0;
             left: 0;
-            background-color: #1a1a2e; /* Dark navy */
+            background-color: #1a1a2e;
             padding: 15px 40px;
-            display: flex;
-            justify-content: center;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
-        .search-container {
+        .logo img {
+            height: 50px;
+        }
+        
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 90%;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #eebbc3;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 10px;
+            display: block;
+        }
+        
+        nav ul li a:hover {
+            color: #ff8906;
+        }
+        
+        .login-btn {
+            text-decoration: none;
+            color: #fffffe;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #ff8906;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ff8906;
+            color: #0f0e17;
+        }
+        
+        .main-content {
             margin-top: 120px;
-            padding: 20px;
+            padding: 30px;
+            flex-grow: 1;
+        }
+        
+        .search-container {
             position: relative;
+            margin-bottom: 30px;
         }
         
         input[type="text"] {
@@ -43,16 +105,17 @@
             color: #fffffe;
             outline: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Poppins', sans-serif;
         }
         
         input[type="text"]::placeholder {
             color: #a7a9be;
         }
         
-        button {
+        .search-btn {
             padding: 12px 24px;
             font-size: 18px;
-            background-color: #ff8906; /* Vibrant orange */
+            background-color: #ff8906;
             color: #0f0e17;
             border: none;
             border-radius: 25px;
@@ -61,10 +124,11 @@
             font-weight: 600;
             transition: all 0.3s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Poppins', sans-serif;
         }
         
-        button:hover {
-            background-color: #e53170; /* Pink */
+        .search-btn:hover {
+            background-color: #e53170;
             transform: translateY(-2px);
         }
         
@@ -74,11 +138,10 @@
             justify-content: center;
             gap: 25px;
             margin-top: 30px;
-            padding: 20px;
         }
         
         .song {
-            background: #1f1f3d; /* Dark purple */
+            background: #1f1f3d;
             padding: 20px;
             border-radius: 12px;
             width: 220px;
@@ -118,59 +181,6 @@
             font-size: 15px;
         }
         
-        .login-btn {
-            text-decoration: none;
-            color: #fffffe;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 2px solid #ff8906;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            background-color: #ff8906;
-            color: #0f0e17;
-        }
-        
-        .logo img {
-            height: 50px;
-        }
-        
-        nav {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            width: 90%;
-            padding: 0;
-            margin: 0;
-        }
-        
-        nav ul li {
-            display: inline;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: #eebbc3; /* Soft pink */
-            font-weight: 600;
-            transition: color 0.3s;
-            padding: 10px;
-            display: block;
-        }
-        
-        nav ul li a:hover {
-            color: #ff8906; /* Orange */
-        }
-        
         .suggestions {
             position: absolute;
             top: 100%;
@@ -203,50 +213,302 @@
             font-weight: 600;
         }
         
-        #now-playing {
+        /* Enhanced Music Player */
+        .player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(26, 26, 46, 0.95);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 137, 6, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .player-container:hover {
+            background-color: rgba(26, 26, 46, 0.98);
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            min-width: 200px;
+            width: 25%;
+        }
+        
+        #song-cover {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #song-cover.playing {
+            animation: rotateCover 20s linear infinite;
+        }
+        
+        @keyframes rotateCover {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .song-details {
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .song-details .marquee {
+            display: inline-block;
+            animation: marquee 10s linear infinite;
+            padding-left: 100%;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        #song-title {
+            margin: 0;
+            font-size: 14px;
+            color: #fffffe;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        #song-artist {
+            margin: 0;
+            font-size: 12px;
+            color: #a7a9be;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            max-width: 50%;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(167, 169, 190, 0.2);
+            border-radius: 2px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: height 0.2s;
+        }
+        
+        .progress-container:hover {
+            height: 6px;
+        }
+        
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff8906, #e53170);
+            border-radius: 2px;
+            transition: width 0.1s;
+            position: relative;
+        }
+        
+        #progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: #fffffe;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .progress-container:hover #progress-bar::after {
+            opacity: 1;
+        }
+        
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 11px;
+            color: #a7a9be;
+            margin-top: 2px;
+        }
+        
+        .controls {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin: 30px auto;
-            max-width: 350px;
-            background: #1f1f3d;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-top: 5px;
         }
         
-        #now-playing img {
-            width: 60px;
-            height: 60px;
-            border-radius: 6px;
-            object-fit: cover;
-        }
-        
-        #now-playing div {
-            text-align: left;
-        }
-        
-        #now-playing strong {
+        .controls button {
+            background: none;
+            border: none;
             color: #fffffe;
-            font-size: 16px;
-            display: block;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        #now-playing small {
+        .controls button i {
+            font-size: 18px;
+        }
+        
+        #play-pause-btn {
+            background: rgba(255, 137, 6, 0.2);
+            width: 40px;
+            height: 40px;
+        }
+        
+        #play-pause-btn:hover {
+            background: rgba(255, 137, 6, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .controls button:not(#play-pause-btn):hover {
+            color: #ff8906;
+            transform: scale(1.1);
+        }
+        
+        .player-right {
+            display: flex;
+            align-items: center;
+            width: 25%;
+            justify-content: flex-end;
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            width: 120px;
+            margin-left: 20px;
+        }
+        
+        .volume-container button {
+            margin-right: 8px;
+        }
+        
+        #volume-slider {
+            width: 80px;
+            height: 4px;
+            background: rgba(167, 169, 190, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fffffe;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .volume-container:hover #volume-slider::-webkit-slider-thumb {
+            opacity: 1;
+        }
+        
+        /* Like Button Styles */
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10px;
+            padding: 0;
             color: #a7a9be;
-            font-size: 14px;
+            transition: all 0.3s;
         }
         
-        #audio-player {
-            width: 80%;
-            max-width: 500px;
-            margin: 20px auto;
+        .like-btn:hover {
+            color: #e53170;
+        }
+        
+        .liked {
+            color: #e53170 !important;
+        }
+        
+        /* Toast notification */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #ff8906;
+            color: #0f0e17;
+            text-align: center;
             border-radius: 8px;
-            background: #1f1f3d;
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 100px;
+            transform: translateX(-50%);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
-        /* Responsive design */
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Animations */
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shrink {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.7); }
+            100% { transform: scale(1); }
+        }
+        
+        .like-btn.liked {
+            animation: heartBeat 0.5s;
+        }
+        
+        .like-btn.unliked {
+            animation: shrink 0.3s;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .main-content {
+                margin-top: 100px;
+                padding: 20px;
+            }
+            
             input[type="text"], .suggestions {
                 width: 80%;
             }
@@ -259,14 +521,27 @@
                 width: 140px;
                 height: 140px;
             }
+            
+            .player-info, .player-right {
+                width: 30%;
+            }
+            
+            .player-controls {
+                max-width: 40%;
+            }
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             input[type="text"], .suggestions {
                 width: 90%;
             }
             
-            button {
+            .search-btn {
                 margin-top: 10px;
                 margin-left: 0;
                 width: 90%;
@@ -280,18 +555,36 @@
                 width: 120px;
                 height: 120px;
             }
-        }
-        .logo img {
-            height: 50px;
+            
+            .player-container {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+            
+            .player-info, .player-controls, .player-right {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+            
+            .progress-container {
+                margin: 5px 0;
+            }
+            
+            .volume-container {
+                margin-left: 0;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <header>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
+        </div>
         <nav>
-            <div class="logo">
-                <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
-            </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="browse.html">Browse</a></li>
@@ -303,216 +596,560 @@
         </nav>
     </header>
     
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search for songs or artists..." autocomplete="off">
-        <button onclick="searchMusic()">Search</button>
-        <div class="suggestions" id="suggestions"></div>
-    </div>
-    
-    <div class="results" id="resultsContainer">
-        <p style="color: #a7a9be;">Search results will appear here...</p>
-    </div>
-    
-    <div id="now-playing">
-        <img src="" alt="Now playing cover">
-        <div>
-            <strong>No song selected</strong>
-            <small>Select a song to play</small>
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for songs or artists..." autocomplete="off">
+            <button class="search-btn" onclick="searchMusic()">Search</button>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        
+        <div class="results" id="resultsContainer">
+            <p style="color: #a7a9be;">Search results will appear here...</p>
         </div>
     </div>
     
-    <audio id="audio-player" controls></audio>
-    
+    <!-- Enhanced Music Player -->
+    <div class="player-container">
+        <div class="player-info">
+            <img id="song-cover" src="default-cover.jpg" alt="Cover">
+            <div class="song-details">
+                <h3 id="song-title">No song selected</h3>
+                <p id="song-artist">Select a song to play</p>
+            </div>
+        </div>
+        
+        <div class="player-controls">
+            <div class="progress-container" id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div class="time-info">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            <div class="controls">
+                <button onclick="shuffle()" title="Shuffle"><i class="fas fa-random"></i></button>
+                <button onclick="prevSong()" title="Previous"><i class="fas fa-step-backward"></i></button>
+                <button id="play-pause-btn" onclick="playPause()" title="Play/Pause"><i class="fas fa-play"></i></button>
+                <button onclick="nextSong()" title="Next"><i class="fas fa-step-forward"></i></button>
+                <button onclick="repeatToggle()" title="Repeat" id="repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+        </div>
+        
+        <div class="player-right">
+            <div class="volume-container">
+                <button onclick="toggleMute()" title="Mute" id="volume-btn"><i class="fas fa-volume-up"></i></button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+            <button class="like-btn" id="player-like-btn" onclick="toggleCurrentLike()" title="Like"><i class="fas fa-heart"></i></button>
+        </div>
+    </div>
+
     <script>
         function logout() {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("currentUser");
-    window.location.href = "authentication.html";
-}
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
+            window.location.href = "authentication.html";
+        }
+
         // Music data
-        
         const playlists = [
             {
                 name: "Songs",
                 songs: [
-  { title: "Appangal-Embadum", artist: "Kannur Seenath", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Appangal-Embadum.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bangaloredays.jpg" },
-  { title: "Darshana", artist: "Hesham Abdul Wahab", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Darshana%20Hridayam%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hridyam.jpg" },
-  { title: "Imaigalo", artist: "AniVee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Imaigalo%20Anivee%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/imaiglo.jpg" },
-  { title: "Welcome To Hyderabad", artist: "Vishnu Vijay", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Welcome%20To%20Hyderabad.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/premalu.jpg" },
-  { title: "Aa Seetadevi Navvula", artist: "Arijit Singh", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aa%20Seetadevi%20Navvula%20-%20(Raag.Fm).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/rowdyfellow.jpg" },
-  { title: "Aagi Aagi", artist: "Anurag Kulkarni", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aagi%20Aagi%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ene.jpg" },
-  { title: "Aakasam Baddalaina", artist: "Sagar", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aakasam%20Baddalaina-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/mr.jpg" },
-  { title: "Em Sandheham Ledhu", artist: "Kalyani Malik", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Em%20Sandheham%20Ledhu-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/Oohalu_Gusagusalade_poster.jpg" },
-  { title: "blue", artist: "yung kai", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/yung%20kai%20-%20blue%20(Official%20Audio)%20%5B%20ezmp3.cc%20%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blue.jpg" },
-  { title: "Wonderwall", artist: "Oasis", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Wonderwall%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/wonder.jpg" },
-  { title: "Blinding-Lights", artist: "The Weeknd", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/The-Weeknd-Blinding-Lights.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blinding.jpg" },
-  { title: "sailor", artist: "Gigi Perez", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Sailor%20Song%20-%20Gigi%20Perez.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sailor.jpg" },
-  { title: "Ordinary", artist: "Alex Warren", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Alex%20warren%20-%20Ordinary.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ordinary.jpg" },
-  { title: "That's so true", artist: "Gracie Abrams", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/That_s%20So%20True%20-%20Gracie%20Abrams.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thatsotrue.jpg" },
-  { title: "Messy", artist: "Lola Young", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Messy%20-%20Lola%20Young.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/messy.jpg" },
-  { title: "Die with smile", artist: "Lady gaga", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Die%20With%20A%20Smile-(SambalpuriStar.In).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/diewithsmile.jpg" },
-  { title: "Anxiety", artist: "Docheii", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Doechii%20-%20Anxiety%20(Visualizer).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/anxiety.jpg" },
-  { title: "Thillana", artist: "Dhanashree", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Thillana%202%200%20-%20Dhanashree%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thillana.jpg" },
-  { title: "Malare", artist: "Ninne", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Malare-Ninne.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/malare.jpg" },
-  { title: "Kamalakucha", artist: "Choochuka", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kamalakucha-Choochuka-Kunkumatho.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kamalakucha.jpg" },
-  { title: "Ritha Dhamava", artist: "bhomee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Ritha%20Dhamava%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ritha.jpg" },
-  { title: "Madhava-Mamava", artist: "Deva", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Madhava-Mamava-Deva.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/madava.jpg" },
-  { title: "Beast Mode", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Beast%20Mode%20Beast%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/beast.jpg" },
-  { title: "Bhaga Bhaga", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Bhaga%20Bhaga.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bhaga.jpg" },
-  { title: "Hungry Cheetah", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Hungry%20Cheetah(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hungry.jpg" },
-  { title: "Rise Of Sultan", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Rise%20Of%20Sultan%20-%20Sultan%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sultan.jpg" },
-  { title: "Zinda", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Zinda%20-%20Bhaag%20Milkha%20Bhaag%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/zinda.jpg" },
-  { title: "Paruvam Vanaga", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20Paruvam%20Vanaga%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
-  { title: "Aamani", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20%20Aamani%20%5Bwww.SenSongsMp3.co%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/aamani.jpg" },
-  { title: "Chinni Chinni Aasa", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/01%20-%20Chinni%20Chinni%20Aasa%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
-  { title: "Yamuna Teeram", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Yamuna%20Teeram.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/yamuna.jpg" },
-  { title: "Naa Cheli Rojave", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/03%20-%20Naa%20Cheli%20Rojave%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
-  { title: "Blockbuster", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Blockbuster%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blockbuster.jpg" },
-  { title: "Illuminati", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Illuminati(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/illumanati.jpg" },
-  { title: "Time To Party", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Time%20To%20Party%20-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/time.jpg" },
-  { title: "Aadharanjali", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aadharanjali.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/adranjali.jpg" },
-  { title: "Kuthanthram", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kuthanthram(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kuthantram.jpg" }
-]
-
+                    { title: "Appangal-Embadum", artist: "Kannur Seenath", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Appangal-Embadum.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bangaloredays.jpg" },
+                    { title: "Darshana", artist: "Hesham Abdul Wahab", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Darshana%20Hridayam%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hridyam.jpg" },
+                    { title: "Imaigalo", artist: "AniVee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Imaigalo%20Anivee%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/imaiglo.jpg" },
+                    { title: "Welcome To Hyderabad", artist: "Vishnu Vijay", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Welcome%20To%20Hyderabad.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/premalu.jpg" },
+                    { title: "Aa Seetadevi Navvula", artist: "Arijit Singh", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aa%20Seetadevi%20Navvula%20-%20(Raag.Fm).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/rowdyfellow.jpg" },
+                    { title: "Aagi Aagi", artist: "Anurag Kulkarni", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aagi%20Aagi%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ene.jpg" },
+                    { title: "Aakasam Baddalaina", artist: "Sagar", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aakasam%20Baddalaina-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/mr.jpg" },
+                    { title: "Em Sandheham Ledhu", artist: "Kalyani Malik", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Em%20Sandheham%20Ledhu-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/Oohalu_Gusagusalade_poster.jpg" },
+                    { title: "blue", artist: "yung kai", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/yung%20kai%20-%20blue%20(Official%20Audio)%20%5B%20ezmp3.cc%20%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blue.jpg" },
+                    { title: "Wonderwall", artist: "Oasis", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Wonderwall%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/wonder.jpg" },
+                    { title: "Blinding-Lights", artist: "The Weeknd", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/The-Weeknd-Blinding-Lights.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blinding.jpg" },
+                    { title: "sailor", artist: "Gigi Perez", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Sailor%20Song%20-%20Gigi%20Perez.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sailor.jpg" },
+                    { title: "Ordinary", artist: "Alex Warren", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Alex%20warren%20-%20Ordinary.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ordinary.jpg" },
+                    { title: "That's so true", artist: "Gracie Abrams", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/That_s%20So%20True%20-%20Gracie%20Abrams.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thatsotrue.jpg" },
+                    { title: "Messy", artist: "Lola Young", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Messy%20-%20Lola%20Young.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/messy.jpg" },
+                    { title: "Die with smile", artist: "Lady gaga", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Die%20With%20A%20Smile-(SambalpuriStar.In).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/diewithsmile.jpg" },
+                    { title: "Anxiety", artist: "Docheii", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Doechii%20-%20Anxiety%20(Visualizer).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/anxiety.jpg" },
+                    { title: "Thillana", artist: "Dhanashree", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Thillana%202%200%20-%20Dhanashree%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thillana.jpg" },
+                    { title: "Malare", artist: "Ninne", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Malare-Ninne.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/malare.jpg" },
+                    { title: "Kamalakucha", artist: "Choochuka", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kamalakucha-Choochuka-Kunkumatho.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kamalakucha.jpg" },
+                    { title: "Ritha Dhamava", artist: "bhomee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Ritha%20Dhamava%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ritha.jpg" },
+                    { title: "Madhava-Mamava", artist: "Deva", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Madhava-Mamava-Deva.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/madava.jpg" },
+                    { title: "Beast Mode", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Beast%20Mode%20Beast%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/beast.jpg" },
+                    { title: "Bhaga Bhaga", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Bhaga%20Bhaga.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bhaga.jpg" },
+                    { title: "Hungry Cheetah", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Hungry%20Cheetah(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hungry.jpg" },
+                    { title: "Rise Of Sultan", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Rise%20Of%20Sultan%20-%20Sultan%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sultan.jpg" },
+                    { title: "Zinda", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Zinda%20-%20Bhaag%20Milkha%20Bhaag%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/zinda.jpg" },
+                    { title: "Paruvam Vanaga", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20Paruvam%20Vanaga%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Aamani", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20%20Aamani%20%5Bwww.SenSongsMp3.co%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/aamani.jpg" },
+                    { title: "Chinni Chinni Aasa", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/01%20-%20Chinni%20Chinni%20Aasa%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Yamuna Teeram", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Yamuna%20Teeram.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/yamuna.jpg" },
+                    { title: "Naa Cheli Rojave", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/03%20-%20Naa%20Cheli%20Rojave%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Blockbuster", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Blockbuster%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blockbuster.jpg" },
+                    { title: "Illuminati", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Illuminati(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/illumanati.jpg" },
+                    { title: "Time To Party", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Time%20To%20Party%20-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/time.jpg" },
+                    { title: "Aadharanjali", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aadharanjali.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/adranjali.jpg" },
+                    { title: "Kuthanthram", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kuthanthram(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kuthantram.jpg" }
+                ]
             }
-        ]
+        ];
 
+        // Player state
+        let currentPlaylist = 0;
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffled = false;
+        let isRepeating = false;
+        let isMuted = false;
+        let volumeBeforeMute = 0.7;
+        
+        // DOM elements
+        const audioPlayer = new Audio();
+        const songTitle = document.getElementById("song-title");
+        const songArtist = document.getElementById("song-artist");
+        const songCover = document.getElementById("song-cover");
+        const playPauseBtn = document.getElementById("play-pause-btn");
+        const progressBar = document.getElementById("progress-bar");
+        const progressContainer = document.getElementById("progress-container");
+        const currentTimeEl = document.getElementById("current-time");
+        const durationEl = document.getElementById("duration");
+        const volumeSlider = document.getElementById("volume-slider");
+        const volumeBtn = document.getElementById("volume-btn");
+        const repeatBtn = document.getElementById("repeat-btn");
+        const likeBtn = document.getElementById("player-like-btn");
+        const resultsContainer = document.getElementById("resultsContainer");
+        const suggestionsContainer = document.getElementById("suggestions");
 
-        // Get all songs from all playlists
-        function getAllSongs() {
-            let allSongs = [];
-            playlists.forEach(playlist => {
-                allSongs = allSongs.concat(playlist.songs);
-            });
-            return allSongs;
+        // Initialize player
+        function initPlayer() {
+            // Set initial volume
+            audioPlayer.volume = volumeSlider.value;
+            
+            // Event listeners
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            audioPlayer.addEventListener('ended', songEnded);
+            audioPlayer.addEventListener('loadedmetadata', updateDuration);
+            
+            progressContainer.addEventListener('click', setProgress);
+            volumeSlider.addEventListener('input', setVolume);
         }
 
-        // Highlight matching text in suggestions
-        function highlightMatch(text, query) {
-            const index = text.toLowerCase().indexOf(query.toLowerCase());
-            if (index >= 0) {
-                return text.substring(0, index) + 
-                       `<span class="suggestion-highlight">${text.substring(index, index + query.length)}</span>` + 
-                       text.substring(index + query.length);
+        // Load a song
+        function loadSong(pIndex, sIndex) {
+            currentPlaylist = pIndex;
+            currentSongIndex = sIndex;
+            const song = playlists[pIndex].songs[sIndex];
+            
+            // Update UI
+            songTitle.innerText = song.title;
+            songArtist.innerText = song.artist;
+            songCover.src = song.cover;
+            
+            // Load audio
+            audioPlayer.src = song.file;
+            
+            // Update like button
+            updateLikeButton();
+            
+            // Play if was playing before
+            if (isPlaying) {
+                audioPlayer.play()
+                    .then(() => {
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
             }
-            return text;
+        }
+
+        // Play/Pause toggle
+        function playPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play()
+                    .then(() => {
+                        isPlaying = true;
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                songCover.classList.remove('playing');
+            }
+        }
+
+        // Previous song
+        function prevSong() {
+            currentSongIndex--;
+            if (currentSongIndex < 0) {
+                currentSongIndex = playlists[currentPlaylist].songs.length - 1;
+            }
+            loadSong(currentPlaylist, currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Next song
+        function nextSong() {
+            currentSongIndex++;
+            if (currentSongIndex >= playlists[currentPlaylist].songs.length) {
+                currentSongIndex = 0;
+            }
+            loadSong(currentPlaylist, currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const { duration, currentTime } = audioPlayer;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            
+            // Update time display
+            currentTimeEl.textContent = formatTime(currentTime);
+        }
+        // Set progress bar on click
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        // Format time in mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Update song duration
+        function updateDuration() {
+            durationEl.textContent = formatTime(audioPlayer.duration);
+        }
+
+        // Song ended
+        function songEnded() {
+            if (isRepeating) {
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else {
+                nextSong();
+            }
+        }
+
+        // Set volume
+        function setVolume() {
+            audioPlayer.volume = this.value;
+            if (audioPlayer.volume > 0.5) {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else if (audioPlayer.volume > 0) {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        }
+
+        // Toggle mute
+        function toggleMute() {
+            if (isMuted) {
+                audioPlayer.volume = volumeBeforeMute;
+                volumeSlider.value = volumeBeforeMute;
+                isMuted = false;
+                if (audioPlayer.volume > 0.5) {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                } else {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+                }
+            } else {
+                volumeBeforeMute = audioPlayer.volume;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+                isMuted = true;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        }
+
+        // Toggle repeat
+        function repeatToggle() {
+            isRepeating = !isRepeating;
+            repeatBtn.style.color = isRepeating ? '#ff8906' : '#fffffe';
+        }
+
+        // Shuffle songs
+        function shuffle() {
+            isShuffled = !isShuffled;
+            if (isShuffled) {
+                // Shuffle the playlist
+                const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+                playlists[currentPlaylist].songs.sort(() => Math.random() - 0.5);
+                
+                // Find the current song in the shuffled array and set it as current
+                const newIndex = playlists[currentPlaylist].songs.findIndex(
+                    song => song.title === currentSong.title && song.artist === currentSong.artist
+                );
+                currentSongIndex = newIndex;
+            } else {
+                // Restore original order
+                playlists[currentPlaylist].songs.sort((a, b) => a.title.localeCompare(b.title));
+                
+                // Find the current song in the original array
+                const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+                const originalIndex = playlists[currentPlaylist].songs.findIndex(
+                    song => song.title === currentSong.title && song.artist === currentSong.artist
+                );
+                currentSongIndex = originalIndex;
+            }
+        }
+
+        // Like/Unlike current song
+        function toggleCurrentLike() {
+            likeBtn.classList.toggle('liked');
+            
+            // Get current user from localStorage
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            // Get favorites from localStorage or initialize
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+            if (!favorites[currentUser.username]) {
+                favorites[currentUser.username] = [];
+            }
+            
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            const songId = `${currentSong.title}-${currentSong.artist}`;
+            
+            if (likeBtn.classList.contains('liked')) {
+                // Add to favorites
+                if (!favorites[currentUser.username].some(s => s.id === songId)) {
+                    favorites[currentUser.username].push({
+                        id: songId,
+                        title: currentSong.title,
+                        artist: currentSong.artist,
+                        file: currentSong.file,
+                        cover: currentSong.cover
+                    });
+                    showToast('Added to favorites');
+                    likeBtn.classList.add('heartBeat');
+                    setTimeout(() => likeBtn.classList.remove('heartBeat'), 1000);
+                }
+            } else {
+                // Remove from favorites
+                favorites[currentUser.username] = favorites[currentUser.username].filter(s => s.id !== songId);
+                showToast('Removed from favorites');
+                likeBtn.classList.add('shrink');
+                setTimeout(() => likeBtn.classList.remove('shrink'), 1000);
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        // Update like button based on current song
+        function updateLikeButton() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                likeBtn.classList.remove('liked');
+                return;
+            }
+            
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+            if (!favorites[currentUser.username]) {
+                likeBtn.classList.remove('liked');
+                return;
+            }
+            
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            const songId = `${currentSong.title}-${currentSong.artist}`;
+            
+            if (favorites[currentUser.username].some(s => s.id === songId)) {
+                likeBtn.classList.add('liked');
+            } else {
+                likeBtn.classList.remove('liked');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 500);
+            }, 3000);
+        }
+
+        // Search functionality
+        function searchMusic() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm.trim()) {
+                resultsContainer.innerHTML = '<p style="color: #a7a9be;">Please enter a search term</p>';
+                return;
+            }
+            
+            const results = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
+            );
+            
+            displayResults(results);
+        }
+
+        // Display search results
+        function displayResults(results) {
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p style="color: #a7a9be;">No results found</p>';
+                return;
+            }
+            
+            let html = '';
+            results.forEach((song, index) => {
+                html += `
+                    <div class="song" onclick="playFromSearch(${index})">
+                        <img src="${song.cover}" alt="${song.title}">
+                        <h3>${song.title}</h3>
+                        <p>${song.artist}</p>
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+        }
+
+        // Play song from search results
+        function playFromSearch(index) {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const results = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
+            );
+            
+            // Find the actual index in the main playlist
+            const song = results[index];
+            const mainIndex = playlists[0].songs.findIndex(s => 
+                s.title === song.title && s.artist === song.artist
+            );
+            
+            currentSongIndex = mainIndex;
+            loadSong(0, mainIndex);
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            songCover.classList.add('playing');
         }
 
         // Show search suggestions
-        function showSuggestions(query) {
-            const suggestionsContainer = document.getElementById('suggestions');
-            const allSongs = getAllSongs();
-            
-            if (!query) {
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length < 2) {
                 suggestionsContainer.style.display = 'none';
                 return;
             }
             
-            const matchingSongs = allSongs.filter(song => 
-                song.title.toLowerCase().includes(query.toLowerCase()) || 
-                song.artist.toLowerCase().includes(query.toLowerCase())
+            const suggestions = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
             ).slice(0, 5);
             
-            if (matchingSongs.length > 0) {
-                let suggestionsHTML = '';
-                matchingSongs.forEach(song => {
-                    suggestionsHTML += `
-                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}', '${song.cover}', '${song.file}')">
-                            <div>${highlightMatch(song.title, query)}</div>
-                            <small>${highlightMatch(song.artist, query)}</small>
-                        </div>
-                    `;
-                });
-                suggestionsContainer.innerHTML = suggestionsHTML;
-                suggestionsContainer.style.display = 'block';
-            } else {
+            if (suggestions.length === 0) {
                 suggestionsContainer.style.display = 'none';
-            }
-        }
-
-        // Select a suggestion
-        function selectSuggestion(title, artist, cover, file) {
-            document.getElementById('searchInput').value = title;
-            document.getElementById('suggestions').style.display = 'none';
-            playSong(title, artist, cover, file);
-        }
-
-        // Search music function
-        function searchMusic() {
-            const query = document.getElementById("searchInput").value.toLowerCase();
-            const resultsContainer = document.getElementById("resultsContainer");
-            const suggestionsContainer = document.getElementById("suggestions");
-            
-            if (!query) {
-                resultsContainer.innerHTML = "<p style='color:#a7a9be;'>Please enter a search term</p>";
                 return;
             }
             
-            resultsContainer.innerHTML = "<p style='color:#a7a9be;'>Searching...</p>";
-            suggestionsContainer.style.display = 'none';
-            
-            const allSongs = getAllSongs();
-            const matchingSongs = allSongs.filter(song => 
-                song.title.toLowerCase().includes(query) || 
-                song.artist.toLowerCase().includes(query)
-            );
-            
-            if (matchingSongs.length > 0) {
-                let resultsHTML = "";
-                matchingSongs.forEach(song => {
-                    resultsHTML += `
-                        <div class='song' onclick="playSong('${song.title}', '${song.artist}', '${song.cover}', '${song.file}')">
-                            <img src='${song.cover}' alt='${song.title}'>
-                            <h3>${song.title}</h3>
-                            <p>${song.artist}</p>
+            let html = '';
+            suggestions.forEach(song => {
+                const titleMatch = song.title.toLowerCase().includes(searchTerm);
+                const artistMatch = !titleMatch && song.artist.toLowerCase().includes(searchTerm);
+                
+                if (titleMatch) {
+                    const index = song.title.toLowerCase().indexOf(searchTerm);
+                    const before = song.title.substring(0, index);
+                    const match = song.title.substring(index, index + searchTerm.length);
+                    const after = song.title.substring(index + searchTerm.length);
+                    
+                    html += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}')">
+                            ${before}<span class="suggestion-highlight">${match}</span>${after} - ${song.artist}
                         </div>
                     `;
-                });
-                resultsContainer.innerHTML = resultsHTML;
-            } else {
-                resultsContainer.innerHTML = `<p style='color:#a7a9be;'>No results found for "${query}"</p>`;
+                } else if (artistMatch) {
+                    const index = song.artist.toLowerCase().indexOf(searchTerm);
+                    const before = song.artist.substring(0, index);
+                    const match = song.artist.substring(index, index + searchTerm.length);
+                    const after = song.artist.substring(index + searchTerm.length);
+                    
+                    html += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}')">
+                            ${song.title} - ${before}<span class="suggestion-highlight">${match}</span>${after}
+                        </div>
+                    `;
+                }
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.style.display = 'block';
+        });
+
+        // Select suggestion
+        function selectSuggestion(title, artist) {
+            document.getElementById('searchInput').value = `${title} - ${artist}`;
+            suggestionsContainer.style.display = 'none';
+            
+            // Find the song and play it
+            const index = playlists[0].songs.findIndex(song => 
+                song.title === title && song.artist === artist
+            );
+            
+            if (index !== -1) {
+                currentSongIndex = index;
+                loadSong(0, index);
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                songCover.classList.add('playing');
             }
         }
 
-        // Play selected song
-        function playSong(title, artist, cover, file) {
-            const audioPlayer = document.getElementById('audio-player');
-            const nowPlaying = document.getElementById('now-playing');
-            
-            // Update now playing display
-            nowPlaying.querySelector('img').src = cover;
-            nowPlaying.querySelector('img').alt = title;
-            nowPlaying.querySelector('strong').textContent = title;
-            nowPlaying.querySelector('small').textContent = artist;
-            
-            // Set and play audio
-            audioPlayer.src = file;
-            audioPlayer.play().catch(e => {
-                console.error("Playback failed:", e);
-            });
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById("searchInput");
-            const suggestionsContainer = document.getElementById("suggestions");
-            
-            searchInput.addEventListener("input", function() {
-                showSuggestions(this.value);
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!searchInput.contains(e.target)) {
-                    suggestionsContainer.style.display = 'none';
-                }
-            });
-            
-            searchInput.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    searchMusic();
-                }
-            });
+        // Hide suggestions when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                suggestionsContainer.style.display = 'none';
+            }
         });
+
+        // Initialize player when page loads
+        window.onload = function() {
+            initPlayer();
+            
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'authentication.html';
+            }
+            
+            // Load first song
+            loadSong(0, 0);
+        };
     </script>
 </body>
 </html>

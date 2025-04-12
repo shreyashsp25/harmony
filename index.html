@@ -10,8 +10,8 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0f0e17; /* Deep navy background */
-            color: #fffffe; /* Off-white text */
+            background-color: #0f0e17;
+            color: #fffffe;
         }
         
         /* Navigation Bar */
@@ -20,7 +20,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            background-color: #1a1a2e; /* Dark navy */
+            background-color: #1a1a2e;
             padding: 15px 40px;
             z-index: 1000;
             display: flex;
@@ -56,7 +56,7 @@
 
         nav ul li a {
             text-decoration: none;
-            color: #eebbc3; /* Soft pink */
+            color: #eebbc3;
             font-weight: 500;
             transition: color 0.3s;
             padding: 10px;
@@ -64,14 +64,14 @@
         }
 
         nav ul li a:hover {
-            color: #ff8906; /* Vibrant orange */
+            color: #ff8906;
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
             padding: 100px 20px;
-            background: linear-gradient(135deg, #ff8906, #e53170); /* Orange to pink gradient */
+            background: linear-gradient(135deg, #ff8906, #e53170);
             margin-top: 100px;
             color: #fffffe;
         }
@@ -104,7 +104,7 @@
         }
 
         .playlist {
-            background: #1f1f3d; /* Dark purple */
+            background: #1f1f3d;
             padding: 15px;
             border-radius: 10px;
             text-align: center;
@@ -133,69 +133,226 @@
             background: #2a2a4a;
         }
 
-        /* Music Player */
+        /* Enhanced Music Player */
         .player-container {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #1a1a2e;
-            padding: 15px;
+            background-color: rgba(26, 26, 46, 0.95);
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
-            border-top: 1px solid #2a2a4a;
+            border-top: 1px solid rgba(255, 137, 6, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .player-container:hover {
+            background-color: rgba(26, 26, 46, 0.98);
         }
 
         .player-info {
             display: flex;
             align-items: center;
             width: 250px;
+            min-width: 200px;
         }
 
         #song-cover {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
             margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        #song-cover.playing {
+            animation: rotateCover 20s linear infinite;
+        }
+
+        @keyframes rotateCover {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .song-details {
             text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .song-details .marquee {
+            display: inline-block;
+            animation: marquee 10s linear infinite;
+            padding-left: 100%;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
 
         #song-title {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: #fffffe;
-            font-weight: 500;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #song-artist {
             margin: 0;
-            font-size: 14px;
-            color: #a7a9be; /* Light gray */
+            font-size: 12px;
+            color: #a7a9be;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .player-controls {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+
+        /* Progress Bar Styles */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(167, 169, 190, 0.2);
+            border-radius: 2px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: height 0.2s;
+        }
+
+        .progress-container:hover {
+            height: 6px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff8906, #e53170);
+            border-radius: 2px;
+            transition: width 0.1s;
+            position: relative;
+        }
+
+        #progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: #fffffe;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .progress-container:hover #progress-bar::after {
+            opacity: 1;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 11px;
+            color: #a7a9be;
+            margin-top: 2px;
+        }
+
+        .controls {
+            display: flex;
             align-items: center;
             gap: 15px;
+            margin-top: 5px;
         }
 
         .controls button {
             background: none;
             border: none;
             color: #fffffe;
-            font-size: 24px;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.2s;
             padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .controls button:hover {
+        .controls button i {
+            font-size: 18px;
+        }
+
+        #play-pause-btn {
+            background: rgba(255, 137, 6, 0.2);
+            width: 40px;
+            height: 40px;
+        }
+
+        #play-pause-btn:hover {
+            background: rgba(255, 137, 6, 0.4);
+            transform: scale(1.05);
+        }
+
+        .controls button:not(#play-pause-btn):hover {
             color: #ff8906;
+            transform: scale(1.1);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            width: 120px;
+            margin-left: 20px;
+        }
+
+        .volume-container button {
+            margin-right: 8px;
+        }
+
+        #volume-slider {
+            width: 80px;
+            height: 4px;
+            background: rgba(167, 169, 190, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fffffe;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .volume-container:hover #volume-slider::-webkit-slider-thumb {
+            opacity: 1;
+        }
+
+        .player-right {
+            display: flex;
+            align-items: center;
+            width: 250px;
+            justify-content: flex-end;
         }
 
         /* Like Button Styles */
@@ -294,6 +451,37 @@
             .playlist {
                 width: 160px;
             }
+            
+            .player-info {
+                min-width: 150px;
+            }
+            
+            .player-right {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .player-container {
+                flex-direction: column;
+                padding: 10px;
+                height: auto;
+            }
+            
+            .player-info, .player-controls, .player-right {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+            
+            .progress-container {
+                margin: 5px 0;
+            }
+            
+            .volume-container {
+                margin-left: 0;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 600px) {
@@ -308,10 +496,6 @@
             
             .playlist {
                 width: 140px;
-            }
-            
-            .player-info {
-                width: 180px;
             }
         }
 
@@ -329,15 +513,17 @@
             background-color: #ff8906;
             color: #0f0e17;
         }
+        
         main {
-    animation: slideUp 0.5s ease-out;
-}
+            animation: slideUp 0.5s ease-out;
+        }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -352,7 +538,6 @@
                 <li><a href="favorites.html">Favorites</a></li>
                 <li><a href="profile.html">Profile</a></li>
                 <li><a href="#" onclick="logout()" class="login-btn">Logout</a></li>
-
             </ul>
         </nav>
     </header>
@@ -368,7 +553,7 @@
         </section>
     </main>
 
-    <!-- Music Player -->
+    <!-- Enhanced Music Player -->
     <div class="player-container">
         <div class="player-info">
             <img id="song-cover" src="" alt="Cover" />
@@ -377,46 +562,35 @@
                 <p id="song-artist">Select a song to play</p>
             </div>
         </div>
+        
         <div class="player-controls">
-            <audio id="audio-player" controls></audio>
-            <div class="controls">
-                <button onclick="prevSong()">⏮️</button>
-                <button id="play-pause-btn" onclick="playPause()">▶️</button>
-                <button onclick="nextSong()">⏭️</button>
+            <div class="progress-container" id="progress-container">
+                <div id="progress-bar"></div>
             </div>
+            <div class="time-info">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            <div class="controls">
+                <button onclick="shuffle()" title="Shuffle"><i class="fas fa-random"></i></button>
+                <button onclick="prevSong()" title="Previous"><i class="fas fa-step-backward"></i></button>
+                <button id="play-pause-btn" onclick="playPause()" title="Play/Pause"><i class="fas fa-play"></i></button>
+                <button onclick="nextSong()" title="Next"><i class="fas fa-step-forward"></i></button>
+                <button onclick="repeatToggle()" title="Repeat" id="repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+        </div>
+        
+        <div class="player-right">
+            <div class="volume-container">
+                <button onclick="toggleMute()" title="Mute" id="volume-btn"><i class="fas fa-volume-up"></i></button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+            <button class="like-btn" id="player-like-btn" onclick="toggleCurrentLike()" title="Like"><i class="fas fa-heart"></i></button>
         </div>
     </div>
 
     <script>
-        // In index.html, modify the onload function
-window.onload = function() {
-    const lastActivity = localStorage.getItem("lastActivity");
-    const now = new Date().getTime();
-    
-    // Session expires after 30 minutes of inactivity
-    if (lastActivity && now - lastActivity > 30 * 60 * 1000) {
-        logout();
-        return;
-    }
-    
-    // Update last activity time
-    localStorage.setItem("lastActivity", now.toString());
-    
-    // Rest of your existing onload code...
-};
-
-// Add mousemove and keypress listeners to update activity
-document.addEventListener("mousemove", updateActivity);
-document.addEventListener("keypress", updateActivity);
-
-function updateActivity() {
-    localStorage.setItem("lastActivity", new Date().getTime().toString());
-}
-        function logout() {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("currentUser");
-    window.location.href = "authentication.html";
-}
+        // Playlists data
         const playlists = [
             {
                 name: "Malayalam",
@@ -450,66 +624,304 @@ function updateActivity() {
             }
         ];
         
+        // Player state
         let currentPlaylist = 0;
         let currentSongIndex = 0;
-        const audioPlayer = document.getElementById("audio-player");
+        let isPlaying = false;
+        let isShuffled = false;
+        let isRepeating = false;
+        let isMuted = false;
+        let volumeBeforeMute = 0.7;
+        
+        // DOM elements
+        const audioPlayer = new Audio();
         const songTitle = document.getElementById("song-title");
         const songArtist = document.getElementById("song-artist");
         const songCover = document.getElementById("song-cover");
         const playPauseBtn = document.getElementById("play-pause-btn");
+        const progressBar = document.getElementById("progress-bar");
+        const progressContainer = document.getElementById("progress-container");
+        const currentTimeEl = document.getElementById("current-time");
+        const durationEl = document.getElementById("duration");
+        const volumeSlider = document.getElementById("volume-slider");
+        const volumeBtn = document.getElementById("volume-btn");
+        const repeatBtn = document.getElementById("repeat-btn");
+        const likeBtn = document.getElementById("player-like-btn");
 
+        // Initialize player
+        function initPlayer() {
+            // Set initial volume
+            audioPlayer.volume = volumeSlider.value;
+            
+            // Event listeners
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            audioPlayer.addEventListener('ended', songEnded);
+            audioPlayer.addEventListener('loadedmetadata', updateDuration);
+            
+            progressContainer.addEventListener('click', setProgress);
+            volumeSlider.addEventListener('input', setVolume);
+            
+            // Load first song
+            loadSong(currentPlaylist, currentSongIndex);
+        }
+
+        // Load a song
         function loadSong(pIndex, sIndex) {
             currentPlaylist = pIndex;
             currentSongIndex = sIndex;
             const song = playlists[pIndex].songs[sIndex];
+            
+            // Update UI
             songTitle.innerText = song.title;
             songArtist.innerText = song.artist;
             songCover.src = song.cover;
-            audioPlayer.src = song.file;
-            audioPlayer.load();
-            playPauseBtn.innerHTML = "▶️";
             
-            // Update like button state for the current song
-            updateLikeButtons();
-        }
-
-        function playPause() {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playPauseBtn.innerHTML = "⏸️";
-            } else {
-                audioPlayer.pause();
-                playPauseBtn.innerHTML = "▶️";
+            // Load audio
+            audioPlayer.src = song.file;
+            
+            // Update like button
+            updateLikeButton();
+            
+            // Play if was playing before
+            if (isPlaying) {
+                audioPlayer.play()
+                    .then(() => {
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
             }
         }
 
-        function nextSong() {
-            const playlist = playlists[currentPlaylist].songs;
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentPlaylist, currentSongIndex);
-            audioPlayer.play();
-            playPauseBtn.innerHTML = "⏸️";
+        // Play/Pause toggle
+        function playPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play()
+                    .then(() => {
+                        isPlaying = true;
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        songCover.classList.add('playing');
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                songCover.classList.remove('playing');
+            }
         }
 
+        // Previous song
         function prevSong() {
-            const playlist = playlists[currentPlaylist].songs;
-            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            currentSongIndex--;
+            if (currentSongIndex < 0) {
+                currentSongIndex = playlists[currentPlaylist].songs.length - 1;
+            }
             loadSong(currentPlaylist, currentSongIndex);
-            audioPlayer.play();
-            playPauseBtn.innerHTML = "⏸️";
+            if (isPlaying) {
+                audioPlayer.play();
+            }
         }
 
+        // Next song
+        function nextSong() {
+            currentSongIndex++;
+            if (currentSongIndex >= playlists[currentPlaylist].songs.length) {
+                currentSongIndex = 0;
+            }
+            loadSong(currentPlaylist, currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const { duration, currentTime } = audioPlayer;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            
+            // Update time display
+            currentTimeEl.textContent = formatTime(currentTime);
+        }
+
+        // Set progress bar on click
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        // Format time (seconds to MM:SS)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Update duration display
+        function updateDuration() {
+            durationEl.textContent = formatTime(audioPlayer.duration);
+        }
+
+        // Song ended
+        function songEnded() {
+            if (isRepeating) {
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else {
+                nextSong();
+                if (isPlaying) {
+                    audioPlayer.play();
+                }
+            }
+        }
+
+        // Set volume
+        function setVolume() {
+            audioPlayer.volume = this.value;
+            
+            // Update volume icon
+            if (this.value == 0) {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isMuted = true;
+            } else if (this.value < 0.5) {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+                isMuted = false;
+            } else {
+                volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                isMuted = false;
+            }
+        }
+
+        // Toggle mute
+        function toggleMute() {
+            if (isMuted) {
+                audioPlayer.volume = volumeBeforeMute;
+                volumeSlider.value = volumeBeforeMute;
+                
+                if (volumeBeforeMute < 0.5) {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+                } else {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            } else {
+                volumeBeforeMute = audioPlayer.volume;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+            isMuted = !isMuted;
+        }
+
+        // Toggle shuffle
+        function shuffle() {
+            isShuffled = !isShuffled;
+            if (isShuffled) {
+                document.querySelector('.controls button:nth-child(1)').style.color = '#ff8906';
+            } else {
+                document.querySelector('.controls button:nth-child(1)').style.color = '#fffffe';
+            }
+        }
+
+        // Toggle repeat
+        function repeatToggle() {
+            isRepeating = !isRepeating;
+            if (isRepeating) {
+                repeatBtn.style.color = '#ff8906';
+            } else {
+                repeatBtn.style.color = '#fffffe';
+            }
+        }
+
+        // Play specific song
         function playSong(pIndex, sIndex) {
             loadSong(pIndex, sIndex);
-            audioPlayer.play();
-            playPauseBtn.innerHTML = "⏸️";
+            audioPlayer.play()
+                .then(() => {
+                    isPlaying = true;
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    songCover.classList.add('playing');
+                })
+                .catch(error => {
+                    console.error("Playback failed:", error);
+                });
         }
 
-        function showToast(message, isSuccess = true) {
+        // Toggle like for current song
+        function toggleCurrentLike() {
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            toggleLike(currentSong.title, currentSong.cover, { target: likeBtn });
+        }
+
+        // Update like button state
+        function updateLikeButton() {
+            const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            
+            if (favorites.some(song => song.title === currentSong.title)) {
+                likeBtn.classList.add("liked");
+            } else {
+                likeBtn.classList.remove("liked");
+            }
+        }
+
+        // Like/Unlike a song
+        function toggleLike(title, imgSrc, event) {
+            event.stopPropagation();
+            
+            const button = event.target.closest('.like-btn') || event.target;
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            
+            // Find the song in any playlist
+            let song = null;
+            for (const playlist of playlists) {
+                const foundSong = playlist.songs.find(s => s.title === title);
+                if (foundSong) {
+                    song = foundSong;
+                    break;
+                }
+            }
+            
+            if (!song) {
+                console.error("Song not found:", title);
+                return;
+            }
+            
+            const index = favorites.findIndex(favSong => favSong.title === title);
+            
+            if (index > -1) {
+                // Unlike the song
+                favorites.splice(index, 1);
+                button.classList.remove("liked");
+                showToast("Removed from favorites");
+            } else {
+                // Like the song
+                favorites.push({ 
+                    title: song.title, 
+                    imgSrc: song.cover, 
+                    file: song.file, 
+                    artist: song.artist 
+                });
+                button.classList.add("liked");
+                showToast("Added to favorites");
+            }
+            
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            updateFavoritesCount();
+        }
+
+        // Show toast notification
+        function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = message;
-            toast.style.backgroundColor = isSuccess ? '#1DB954' : '#ff3333';
+            toast.style.backgroundColor = '#1DB954';
             document.body.appendChild(toast);
             
             // Show toast
@@ -524,68 +936,7 @@ function updateActivity() {
             }, 3000);
         }
 
-        function toggleLike(title, imgSrc, event) {
-        event.stopPropagation();
-        
-        const button = event.target;
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        
-        // Find the song in any playlist
-        let song = null;
-        for (const playlist of playlists) {
-            const foundSong = playlist.songs.find(s => s.title === title);
-            if (foundSong) {
-                song = foundSong;
-                break;
-            }
-        }
-        
-        if (!song) {
-            console.error("Song not found:", title);
-            return;
-        }
-        
-        const index = favorites.findIndex(favSong => favSong.title === title);
-        
-        if (index > -1) {
-            // Unlike the song
-            favorites.splice(index, 1);
-            button.classList.remove("liked");
-            showToast("Removed from favorites"); // Removed the false parameter
-        } else {
-            // Like the song
-            favorites.push({ 
-                title: song.title, 
-                imgSrc: song.cover, 
-                file: song.file, 
-                artist: song.artist 
-            });
-            button.classList.add("liked");
-            showToast("Added to favorites");
-        }
-        
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        updateFavoritesCount();
-    }
-
-    function showToast(message) {  // Removed the isSuccess parameter
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-        toast.style.backgroundColor = '#1DB954'; // Always use Spotify green
-        document.body.appendChild(toast);
-        
-        // Show toast
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
-        // Hide toast after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 500);
-        }, 3000);
-    }
+        // Update favorites count
         function updateFavoritesCount() {
             const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
             const favCountElement = document.getElementById("favorites-count");
@@ -594,18 +945,7 @@ function updateActivity() {
             }
         }
 
-        function updateLikeButtons() {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    document.querySelectorAll(".like-btn").forEach(button => {
-        const songTitle = button.getAttribute('data-title');
-        if (favorites.some(song => song.title === songTitle)) {
-            button.classList.add("liked");
-        } else {
-            button.classList.remove("liked");
-        }
-    });
-}
-
+        // Load playlists
         function loadPlaylists() {
             const playlistContainer = document.getElementById("playlist-container");
             playlistContainer.innerHTML = "";
@@ -621,46 +961,45 @@ function updateActivity() {
                             <p onclick="playSong(${pIndex}, ${sIndex})">
                                 ${song.title} - ${song.artist}
                                 <button class="like-btn" data-title="${song.title}" onclick="toggleLike('${song.title}', '${song.cover}', event)">
-    ❤️
-</button>
+                                    <i class="fas fa-heart"></i>
+                                </button>
                             </p>
                         `).join('')}
                     </div>
                 `;
                 playlistContainer.appendChild(playlistDiv);
             });
-            
-            // Update like buttons after loading playlists
-            updateLikeButtons();
         }
 
-        window.onload = function() {
-            loadPlaylists();
-            loadSong(0, 0);
-        };
-        window.onload = function() {
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        
-        if (!isLoggedIn || isLoggedIn !== "true") {
-            // Redirect to authentication page if not logged in
+        // Logout function
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
             window.location.href = "authentication.html";
-        } else {
-            // Load content normally if authenticated
-            loadPlaylists();
-            loadSong(0, 0);
-            updateUserProfileLink();
         }
-    };
 
-    function updateUserProfileLink() {
-        const currentUser = localStorage.getItem("currentUser");
-        if (currentUser) {
-            const profileLink = document.querySelector('a[href="profile.html"]');
-            if (profileLink) {
-                profileLink.textContent = "Profile";
+        // Initialize on page load
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            
+            if (!isLoggedIn || isLoggedIn !== "true") {
+                window.location.href = "authentication.html";
+            } else {
+                loadPlaylists();
+                initPlayer();
+                updateUserProfileLink();
+            }
+        };
+
+        function updateUserProfileLink() {
+            const currentUser = localStorage.getItem("currentUser");
+            if (currentUser) {
+                const profileLink = document.querySelector('a[href="profile.html"]');
+                if (profileLink) {
+                    profileLink.textContent = "Profile";
+                }
             }
         }
-    }
     </script>
 </body>
 </html>

@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harmony - Profile</title>
+    <title>Harmony - Search</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #0f0e17;
             color: #fffffe;
-            padding-bottom: 120px; /* Space for playbar */
+            display: flex;
+            flex-direction: column;
         }
         
         header {
@@ -29,18 +30,18 @@
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
+        
         .logo img {
             height: 50px;
         }
-
+        
         nav {
             width: 100%;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
-
+        
         nav ul {
             list-style: none;
             display: flex;
@@ -48,168 +49,171 @@
             justify-content: space-evenly;
             width: 90%;
             padding: 0;
-            margin: 10px 0 0;
+            margin: 0;
         }
-
+        
         nav ul li {
             display: inline;
         }
-
+        
         nav ul li a {
             text-decoration: none;
             color: #eebbc3;
-            font-weight: 500;
+            font-weight: 600;
             transition: color 0.3s;
             padding: 10px;
             display: block;
         }
-
+        
         nav ul li a:hover {
             color: #ff8906;
         }
-
-        .profile-container {
-            max-width: 600px;
-            margin: 150px auto 100px;
-            padding: 30px;
-            background-color: #1a1a2e;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 3px solid #ff8906;
-            object-fit: cover;
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.1);
-        }
-
-        h2 {
+        
+        .login-btn {
+            text-decoration: none;
             color: #fffffe;
-            margin-bottom: 5px;
-        }
-
-        p {
-            color: #a7a9be;
-            margin: 8px 0;
-        }
-
-        .favorite-playlists {
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .favorite-playlists h3 {
-            color: #fffffe;
-            border-bottom: 2px solid #ff8906;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        .playlist {
-            background: #2a2a4a;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #ff8906;
             transition: all 0.3s;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-
-        .playlist:hover {
-            background: #ff8906;
+        
+        .login-btn:hover {
+            background-color: #ff8906;
             color: #0f0e17;
-            transform: translateX(5px);
         }
-
-        .playlist p {
-            color: inherit;
-            margin: 0;
+        
+        .main-content {
+            margin-top: 120px;
+            padding: 30px;
+            flex-grow: 1;
         }
-
-        .playlist-count {
-            background: #1a1a2e;
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        input[type="text"] {
+            width: 60%;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: none;
+            background: #2a2a4a;
             color: #fffffe;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 12px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Poppins', sans-serif;
         }
-
-        .playlist:hover .playlist-count {
-            background: #0f0e17;
-            color: #fffffe;
+        
+        input[type="text"]::placeholder {
+            color: #a7a9be;
         }
-
-        .profile-actions {
-            margin: 25px 0;
-        }
-
-        .update-btn {
-            background: #ff8906;
+        
+        .search-btn {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #ff8906;
             color: #0f0e17;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
+            margin-left: 10px;
             font-weight: 600;
             transition: all 0.3s;
-            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Poppins', sans-serif;
         }
-
-        .update-btn:hover {
-            background: #e53170;
-            color: #fffffe;
-            transform: scale(1.05);
+        
+        .search-btn:hover {
+            background-color: #e53170;
+            transform: translateY(-2px);
         }
-
-        .logout-btn {
-            background: transparent;
-            color: #e53170;
-            border: 2px solid #e53170;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 15px;
-            font-size: 14px;
+        
+        .results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
         }
-
-        .logout-btn:hover {
-            background: #e53170;
-            color: #fffffe;
-            transform: scale(1.05);
-        }
-
-        #profile-upload {
-            display: none;
-        }
-
-        .empty-state {
-            color: #a7a9be;
-            font-style: italic;
+        
+        .song {
+            background: #1f1f3d;
             padding: 20px;
-            background: #2a2a4a;
-            border-radius: 8px;
+            border-radius: 12px;
+            width: 220px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
-        /* Enhanced Music Player - Matching the search page */
+        
+        .song:hover {
+            background: #2a2a4a;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .song img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .song h3 {
+            margin: 15px 0 8px;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #fffffe;
+        }
+        
+        .song p {
+            margin: 0;
+            color: #a7a9be;
+            font-size: 15px;
+        }
+        
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1f1f3d;
+            border-radius: 0 0 12px 12px;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            text-align: left;
+            border-bottom: 1px solid #2a2a4a;
+            transition: background-color 0.3s;
+        }
+        
+        .suggestion-item:hover {
+            background: #2a2a4a;
+        }
+        
+        .suggestion-highlight {
+            color: #ff8906;
+            font-weight: 600;
+        }
+        
+        /* Enhanced Music Player */
         .player-container {
             position: fixed;
             bottom: 0;
@@ -500,14 +504,22 @@
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .profile-container {
-                margin: 120px 20px 120px;
+            .main-content {
+                margin-top: 100px;
                 padding: 20px;
             }
             
-            nav ul {
-                flex-direction: column;
-                align-items: center;
+            input[type="text"], .suggestions {
+                width: 80%;
+            }
+            
+            .song {
+                width: 160px;
+            }
+            
+            .song img {
+                width: 140px;
+                height: 140px;
             }
             
             .player-info, .player-right {
@@ -523,6 +535,25 @@
             nav ul {
                 flex-direction: column;
                 align-items: center;
+            }
+            
+            input[type="text"], .suggestions {
+                width: 90%;
+            }
+            
+            .search-btn {
+                margin-top: 10px;
+                margin-left: 0;
+                width: 90%;
+            }
+            
+            .song {
+                width: 140px;
+            }
+            
+            .song img {
+                width: 120px;
+                height: 120px;
             }
             
             .player-container {
@@ -560,35 +591,24 @@
                 <li><a href="search.html">Search</a></li>
                 <li><a href="favorites.html">Favorites</a></li>
                 <li><a href="profile.html">Profile</a></li>
-                <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+                <li><a href="#" onclick="logout()" class="login-btn">Logout</a></li>
             </ul>
         </nav>
     </header>
-
-    <div class="profile-container">
-        <img id="profile-pic" src="" alt="Profile Picture" class="profile-pic">
-        <h2 id="username">Harmony User</h2>
-        <p id="email">Email: loading...</p>
-        <p id="member-since">Member since: loading...</p>
-        
-        <div class="profile-actions">
-            <input type="file" id="profile-upload" accept="image/*">
-            <button class="update-btn" onclick="document.getElementById('profile-upload').click()">
-                Update Profile Picture
-            </button>
+    
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for songs or artists..." autocomplete="off">
+            <button class="search-btn" onclick="searchMusic()">Search</button>
+            <div class="suggestions" id="suggestions"></div>
         </div>
         
-        <div class="favorite-playlists">
-            <h3>Favorite Playlists</h3>
-            <div id="playlists-container" class="empty-state">
-                Loading your playlists...
-            </div>
+        <div class="results" id="resultsContainer">
+            <p style="color: #a7a9be;">Search results will appear here...</p>
         </div>
-        
-        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
-
-    <!-- Enhanced Music Player - Matching the search page -->
+    
+    <!-- Enhanced Music Player -->
     <div class="player-container">
         <div class="player-info">
             <img id="song-cover" src="default-cover.jpg" alt="Cover">
@@ -625,177 +645,57 @@
     </div>
 
     <script>
-        // Initialize when DOM is fully loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            console.log("Profile page loaded");
-            
-            // Check authentication
-            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-            const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
-            
-            if (!isLoggedIn || !loggedInUserEmail) {
-                console.log("No user logged in, redirecting...");
-                window.location.href = 'authentication.html';
-                return;
-            }
-
-            // Load user data
-            loadUserProfile(loggedInUserEmail);
-            
-            // Setup event listeners
-            setupEventHandlers();
-            
-            // Initialize player
-            initPlayer();
-        });
-
-        function loadUserProfile(email) {
-            console.log("Loading profile for:", email);
-            
-            try {
-                const userData = localStorage.getItem(email);
-                if (!userData) {
-                    throw new Error("User data not found");
-                }
-                
-                const user = JSON.parse(userData);
-                console.log("User data:", user);
-                
-                if (!user || typeof user !== "object") {
-                    throw new Error("Invalid user data format");
-                }
-
-                // Update profile information
-                document.getElementById("username").textContent = user.name || "Harmony User";
-                document.getElementById("email").textContent = `Email: ${user.email || "Not provided"}`;
-                document.getElementById("member-since").textContent = `Member since: ${user.memberSince || "recently"}`;
-                
-                // Set profile picture with fallback
-                const defaultPic = "https://via.placeholder.com/150/1a1a2e/ffffff?text=Harmony";
-                document.getElementById("profile-pic").src = user.profilePic || defaultPic;
-                
-                // Load favorites
-                loadFavoritePlaylists();
-                
-            } catch (error) {
-                console.error("Error loading profile:", error);
-                showToast("Error loading profile data");
-                logout();
-            }
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
+            window.location.href = "authentication.html";
         }
 
-        function setupEventHandlers() {
-            // Profile picture upload
-            document.getElementById("profile-upload").addEventListener("change", handleProfileUpload);
-        }
-
-        function handleProfileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            // Validate image file
-            if (!file.type.match('image.*')) {
-                showToast("Please select an image file (JPEG, PNG)");
-                return;
+        // Music data
+        const playlists = [
+            {
+                name: "Songs",
+                songs: [
+                    { title: "Appangal-Embadum", artist: "Kannur Seenath", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Appangal-Embadum.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bangaloredays.jpg" },
+                    { title: "Darshana", artist: "Hesham Abdul Wahab", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Darshana%20Hridayam%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hridyam.jpg" },
+                    { title: "Imaigalo", artist: "AniVee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Imaigalo%20Anivee%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/imaiglo.jpg" },
+                    { title: "Welcome To Hyderabad", artist: "Vishnu Vijay", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Welcome%20To%20Hyderabad.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/premalu.jpg" },
+                    { title: "Aa Seetadevi Navvula", artist: "Arijit Singh", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aa%20Seetadevi%20Navvula%20-%20(Raag.Fm).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/rowdyfellow.jpg" },
+                    { title: "Aagi Aagi", artist: "Anurag Kulkarni", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aagi%20Aagi%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ene.jpg" },
+                    { title: "Aakasam Baddalaina", artist: "Sagar", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aakasam%20Baddalaina-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/mr.jpg" },
+                    { title: "Em Sandheham Ledhu", artist: "Kalyani Malik", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Em%20Sandheham%20Ledhu-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/Oohalu_Gusagusalade_poster.jpg" },
+                    { title: "blue", artist: "yung kai", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/yung%20kai%20-%20blue%20(Official%20Audio)%20%5B%20ezmp3.cc%20%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blue.jpg" },
+                    { title: "Wonderwall", artist: "Oasis", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Wonderwall%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/wonder.jpg" },
+                    { title: "Blinding-Lights", artist: "The Weeknd", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/The-Weeknd-Blinding-Lights.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blinding.jpg" },
+                    { title: "sailor", artist: "Gigi Perez", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Sailor%20Song%20-%20Gigi%20Perez.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sailor.jpg" },
+                    { title: "Ordinary", artist: "Alex Warren", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Alex%20warren%20-%20Ordinary.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ordinary.jpg" },
+                    { title: "That's so true", artist: "Gracie Abrams", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/That_s%20So%20True%20-%20Gracie%20Abrams.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thatsotrue.jpg" },
+                    { title: "Messy", artist: "Lola Young", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Messy%20-%20Lola%20Young.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/messy.jpg" },
+                    { title: "Die with smile", artist: "Lady gaga", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Die%20With%20A%20Smile-(SambalpuriStar.In).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/diewithsmile.jpg" },
+                    { title: "Anxiety", artist: "Docheii", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Doechii%20-%20Anxiety%20(Visualizer).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/anxiety.jpg" },
+                    { title: "Thillana", artist: "Dhanashree", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Thillana%202%200%20-%20Dhanashree%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/thillana.jpg" },
+                    { title: "Malare", artist: "Ninne", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Malare-Ninne.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/malare.jpg" },
+                    { title: "Kamalakucha", artist: "Choochuka", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kamalakucha-Choochuka-Kunkumatho.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kamalakucha.jpg" },
+                    { title: "Ritha Dhamava", artist: "bhomee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Ritha%20Dhamava%20(PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ritha.jpg" },
+                    { title: "Madhava-Mamava", artist: "Deva", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Madhava-Mamava-Deva.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/madava.jpg" },
+                    { title: "Beast Mode", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Beast%20Mode%20Beast%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/beast.jpg" },
+                    { title: "Bhaga Bhaga", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Bhaga%20Bhaga.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bhaga.jpg" },
+                    { title: "Hungry Cheetah", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Hungry%20Cheetah(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hungry.jpg" },
+                    { title: "Rise Of Sultan", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Rise%20Of%20Sultan%20-%20Sultan%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sultan.jpg" },
+                    { title: "Zinda", artist: "Artist C", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Zinda%20-%20Bhaag%20Milkha%20Bhaag%20128%20Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/zinda.jpg" },
+                    { title: "Paruvam Vanaga", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20Paruvam%20Vanaga%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Aamani", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/04%20-%20%20Aamani%20%5Bwww.SenSongsMp3.co%5D.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/aamani.jpg" },
+                    { title: "Chinni Chinni Aasa", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/01%20-%20Chinni%20Chinni%20Aasa%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Yamuna Teeram", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Yamuna%20Teeram.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/yamuna.jpg" },
+                    { title: "Naa Cheli Rojave", artist: "Artist D", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/03%20-%20Naa%20Cheli%20Rojave%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/paruvam.jpg" },
+                    { title: "Blockbuster", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Blockbuster%20-%20SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blockbuster.jpg" },
+                    { title: "Illuminati", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Illuminati(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/illumanati.jpg" },
+                    { title: "Time To Party", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Time%20To%20Party%20-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/time.jpg" },
+                    { title: "Aadharanjali", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aadharanjali.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/adranjali.jpg" },
+                    { title: "Kuthanthram", artist: "Artist E", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Kuthanthram(KoshalWorld.Com).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/kuthantram.jpg" }
+                ]
             }
-
-            // Check file size (max 2MB)
-            if (file.size > 2 * 1024 * 1024) {
-                showToast("Image too large (max 2MB)");
-                return;
-            }
-
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const loggedInUserEmail = localStorage.getItem("harmonyLoggedInUser");
-                if (!loggedInUserEmail) {
-                    showToast("Session expired, please log in again");
-                    return;
-                }
-
-                try {
-                    // Update user data
-                    const user = JSON.parse(localStorage.getItem(loggedInUserEmail)) || {};
-                    user.profilePic = e.target.result;
-                    
-                    // Save updated user data
-                    localStorage.setItem(loggedInUserEmail, JSON.stringify(user));
-                    
-                    // Update UI
-                    document.getElementById("profile-pic").src = e.target.result;
-                    showToast("Profile picture updated successfully!");
-                    
-                } catch (error) {
-                    console.error("Error updating profile picture:", error);
-                    showToast("Failed to update profile picture");
-                }
-            };
-            
-            reader.onerror = function() {
-                showToast("Error reading image file");
-            };
-            
-            reader.readAsDataURL(file);
-        }
-
-        function loadFavoritePlaylists() {
-            console.log("Loading favorite playlists...");
-            
-            const playlistsContainer = document.getElementById("playlists-container");
-            playlistsContainer.innerHTML = "";
-            
-            try {
-                const favorites = JSON.parse(localStorage.getItem("harmonyFavorites")) || [];
-                console.log("Found favorites:", favorites);
-                
-                if (favorites.length === 0) {
-                    playlistsContainer.innerHTML = `
-                        <div class="empty-state">
-                            You haven't added any favorites yet.
-                            <br>
-                            <a href="browse.html" style="color: #ff8906;">Discover music</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Group by playlist (or create default if none)
-                const playlists = {};
-                favorites.forEach(song => {
-                    const playlistName = song.playlist || "My Favorites";
-                    if (!playlists[playlistName]) {
-                        playlists[playlistName] = [];
-                    }
-                    playlists[playlistName].push(song);
-                });
-                
-                // Create playlist elements
-                Object.entries(playlists).forEach(([name, songs]) => {
-                    const playlistElement = document.createElement("div");
-                    playlistElement.className = "playlist";
-                    playlistElement.innerHTML = `
-                        <p>${name}</p>
-                        <span class="playlist-count">${songs.length} song${songs.length !== 1 ? 's' : ''}</span>
-                    `;
-                    
-                    playlistElement.addEventListener("click", () => {
-                        localStorage.setItem("harmonySelectedPlaylist", name);
-                        window.location.href = "favorites.html";
-                    });
-                    
-                    playlistsContainer.appendChild(playlistElement);
-                });
-                
-            } catch (error) {
-                console.error("Error loading favorites:", error);
-                playlistsContainer.innerHTML = `
-                    <div class="empty-state">
-                        Error loading your favorites.
-                    </div>
-                `;
-            }
-        }
+        ];
 
         // Player state
         let currentPlaylist = 0;
@@ -820,6 +720,8 @@
         const volumeBtn = document.getElementById("volume-btn");
         const repeatBtn = document.getElementById("repeat-btn");
         const likeBtn = document.getElementById("player-like-btn");
+        const resultsContainer = document.getElementById("resultsContainer");
+        const suggestionsContainer = document.getElementById("suggestions");
 
         // Initialize player
         function initPlayer() {
@@ -833,30 +735,6 @@
             
             progressContainer.addEventListener('click', setProgress);
             volumeSlider.addEventListener('input', setVolume);
-            
-            // Load current song from localStorage if available
-            const currentSong = JSON.parse(localStorage.getItem("harmonyCurrentSong")) || null;
-            const isPlaying = localStorage.getItem("harmonyIsPlaying") === "true";
-            
-            if (currentSong) {
-                // Find the song in our playlists
-                const songIndex = playlists[0].songs.findIndex(s => 
-                    s.title === currentSong.title && s.artist === currentSong.artist
-                );
-                
-                if (songIndex !== -1) {
-                    currentSongIndex = songIndex;
-                    loadSong(0, songIndex);
-                    if (isPlaying) {
-                        audioPlayer.play();
-                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        songCover.classList.add('playing');
-                    }
-                }
-            } else {
-                // Load first song
-                loadSong(0, 0);
-            }
         }
 
         // Load a song
@@ -875,14 +753,6 @@
             
             // Update like button
             updateLikeButton();
-            
-            // Save current song to localStorage
-            localStorage.setItem("harmonyCurrentSong", JSON.stringify({
-                title: song.title,
-                artist: song.artist,
-                albumArt: song.cover,
-                duration: 180 // Default duration for demo
-            }));
             
             // Play if was playing before
             if (isPlaying) {
@@ -903,7 +773,6 @@
                 audioPlayer.play()
                     .then(() => {
                         isPlaying = true;
-                        localStorage.setItem("harmonyIsPlaying", "true");
                         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                         songCover.classList.add('playing');
                     })
@@ -913,7 +782,6 @@
             } else {
                 audioPlayer.pause();
                 isPlaying = false;
-                localStorage.setItem("harmonyIsPlaying", "false");
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
                 songCover.classList.remove('playing');
             }
@@ -952,7 +820,6 @@
             // Update time display
             currentTimeEl.textContent = formatTime(currentTime);
         }
-        
         // Set progress bar on click
         function setProgress(e) {
             const width = this.clientWidth;
@@ -1052,13 +919,13 @@
             likeBtn.classList.toggle('liked');
             
             // Get current user from localStorage
-            const currentUser = JSON.parse(localStorage.getItem('harmonyLoggedInUser'));
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) return;
             
             // Get favorites from localStorage or initialize
-            const favorites = JSON.parse(localStorage.getItem('harmonyFavorites')) || {};
-            if (!favorites[currentUser]) {
-                favorites[currentUser] = [];
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+            if (!favorites[currentUser.username]) {
+                favorites[currentUser.username] = [];
             }
             
             const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
@@ -1066,8 +933,8 @@
             
             if (likeBtn.classList.contains('liked')) {
                 // Add to favorites
-                if (!favorites[currentUser].some(s => s.id === songId)) {
-                    favorites[currentUser].push({
+                if (!favorites[currentUser.username].some(s => s.id === songId)) {
+                    favorites[currentUser.username].push({
                         id: songId,
                         title: currentSong.title,
                         artist: currentSong.artist,
@@ -1080,25 +947,25 @@
                 }
             } else {
                 // Remove from favorites
-                favorites[currentUser] = favorites[currentUser].filter(s => s.id !== songId);
+                favorites[currentUser.username] = favorites[currentUser.username].filter(s => s.id !== songId);
                 showToast('Removed from favorites');
                 likeBtn.classList.add('shrink');
                 setTimeout(() => likeBtn.classList.remove('shrink'), 1000);
             }
             
-            localStorage.setItem('harmonyFavorites', JSON.stringify(favorites));
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         }
 
         // Update like button based on current song
         function updateLikeButton() {
-            const currentUser = localStorage.getItem('harmonyLoggedInUser');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 likeBtn.classList.remove('liked');
                 return;
             }
             
-            const favorites = JSON.parse(localStorage.getItem('harmonyFavorites')) || {};
-            if (!favorites[currentUser]) {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+            if (!favorites[currentUser.username]) {
                 likeBtn.classList.remove('liked');
                 return;
             }
@@ -1106,13 +973,14 @@
             const currentSong = playlists[currentPlaylist].songs[currentSongIndex];
             const songId = `${currentSong.title}-${currentSong.artist}`;
             
-            if (favorites[currentUser].some(s => s.id === songId)) {
+            if (favorites[currentUser.username].some(s => s.id === songId)) {
                 likeBtn.classList.add('liked');
             } else {
                 likeBtn.classList.remove('liked');
             }
         }
 
+        // Show toast notification
         function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -1131,13 +999,160 @@
             }, 3000);
         }
 
-        function logout() {
-            console.log("Logging out...");
-            // Clear all auth-related items
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("harmonyLoggedInUser");
-            window.location.href = "authentication.html";
+        // Search functionality
+        function searchMusic() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm.trim()) {
+                resultsContainer.innerHTML = '<p style="color: #a7a9be;">Please enter a search term</p>';
+                return;
+            }
+            
+            const results = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
+            );
+            
+            displayResults(results);
         }
+
+        // Display search results
+        function displayResults(results) {
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p style="color: #a7a9be;">No results found</p>';
+                return;
+            }
+            
+            let html = '';
+            results.forEach((song, index) => {
+                html += `
+                    <div class="song" onclick="playFromSearch(${index})">
+                        <img src="${song.cover}" alt="${song.title}">
+                        <h3>${song.title}</h3>
+                        <p>${song.artist}</p>
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+        }
+
+        // Play song from search results
+        function playFromSearch(index) {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const results = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
+            );
+            
+            // Find the actual index in the main playlist
+            const song = results[index];
+            const mainIndex = playlists[0].songs.findIndex(s => 
+                s.title === song.title && s.artist === song.artist
+            );
+            
+            currentSongIndex = mainIndex;
+            loadSong(0, mainIndex);
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            songCover.classList.add('playing');
+        }
+
+        // Show search suggestions
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length < 2) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            const suggestions = playlists[0].songs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.artist.toLowerCase().includes(searchTerm)
+            ).slice(0, 5);
+            
+            if (suggestions.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(song => {
+                const titleMatch = song.title.toLowerCase().includes(searchTerm);
+                const artistMatch = !titleMatch && song.artist.toLowerCase().includes(searchTerm);
+                
+                if (titleMatch) {
+                    const index = song.title.toLowerCase().indexOf(searchTerm);
+                    const before = song.title.substring(0, index);
+                    const match = song.title.substring(index, index + searchTerm.length);
+                    const after = song.title.substring(index + searchTerm.length);
+                    
+                    html += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}')">
+                            ${before}<span class="suggestion-highlight">${match}</span>${after} - ${song.artist}
+                        </div>
+                    `;
+                } else if (artistMatch) {
+                    const index = song.artist.toLowerCase().indexOf(searchTerm);
+                    const before = song.artist.substring(0, index);
+                    const match = song.artist.substring(index, index + searchTerm.length);
+                    const after = song.artist.substring(index + searchTerm.length);
+                    
+                    html += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${song.title}', '${song.artist}')">
+                            ${song.title} - ${before}<span class="suggestion-highlight">${match}</span>${after}
+                        </div>
+                    `;
+                }
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.style.display = 'block';
+        });
+
+        // Select suggestion
+        function selectSuggestion(title, artist) {
+            document.getElementById('searchInput').value = `${title} - ${artist}`;
+            suggestionsContainer.style.display = 'none';
+            
+            // Find the song and play it
+            const index = playlists[0].songs.findIndex(song => 
+                song.title === title && song.artist === artist
+            );
+            
+            if (index !== -1) {
+                currentSongIndex = index;
+                loadSong(0, index);
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                songCover.classList.add('playing');
+            }
+        }
+
+        // Hide suggestions when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Initialize player when page loads
+        window.onload = function() {
+            initPlayer();
+            
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'authentication.html';
+            }
+            
+            // Load first song
+            loadSong(0, 0);
+        };
+        function playSongFromPage(pIndex, sIndex) {
+    window.playSong(pIndex, sIndex);
+}
     </script>
 </body>
 </html>

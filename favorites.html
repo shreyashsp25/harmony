@@ -117,6 +117,12 @@
             color: #fffffe;
         }
         
+        .song p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #a7a9be;
+        }
+        
         .empty-message {
             color: #a7a9be;
             font-style: italic;
@@ -484,7 +490,7 @@
     <!-- Enhanced Music Player -->
     <div class="player-container">
         <div class="player-info">
-            <img id="song-cover" src="" alt="Cover">
+            <img id="song-cover" src="https://via.placeholder.com/50" alt="Cover">
             <div class="song-details">
                 <h3 id="song-title">No song selected</h3>
                 <p id="song-artist">Select a song to play</p>
@@ -541,6 +547,28 @@
         let isRepeating = false;
         let isMuted = false;
         let volumeBeforeMute = 0.7;
+        
+        // Sample data for testing (remove in production)
+        const sampleFavorites = [
+            {
+                title: "Blinding Lights",
+                artist: "The Weeknd",
+                cover: "https://i.scdn.co/image/ab67616d00001e02a935e865c8f1ea175d8a45d1",
+                file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            },
+            {
+                title: "Dance Monkey",
+                artist: "Tones and I",
+                cover: "https://i.scdn.co/image/ab67616d00001e02a4f6d15b8a6a3a0e1b9b0b9a",
+                file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            {
+                title: "Watermelon Sugar",
+                artist: "Harry Styles",
+                cover: "https://i.scdn.co/image/ab67616d00001e02a3d3b9c7a0e1b9b0b9a0b9a0",
+                file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            }
+        ];
         
         // Initialize player
         function initPlayer() {
@@ -676,7 +704,7 @@
         function loadSong(song) {
             songTitle.textContent = song.title;
             songArtist.textContent = song.artist || "Unknown Artist";
-            songCover.src = song.cover || "https://via.placeholder.com/50";
+            songCover.src = song.cover || "https://via.placeholder.com/160";
             audioPlayer.src = song.file;
             
             // Update like button
@@ -695,14 +723,26 @@
 
         // Next song
         function nextSong() {
-            // This would need to be implemented based on your playlist structure
-            console.log("Next song");
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            if (favorites.length === 0) return;
+            
+            currentSongIndex = (currentSongIndex + 1) % favorites.length;
+            loadSong(favorites[currentSongIndex]);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
         }
 
         // Previous song
         function prevSong() {
-            // This would need to be implemented based on your playlist structure
-            console.log("Previous song");
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            if (favorites.length === 0) return;
+            
+            currentSongIndex = (currentSongIndex - 1 + favorites.length) % favorites.length;
+            loadSong(favorites[currentSongIndex]);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
         }
 
         // Toggle like for current song
@@ -801,7 +841,14 @@
 
         // Display favorites
         function displayFavorites() {
-            const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            
+            // If no favorites and we're in development, use sample data
+            if (favorites.length === 0 && window.location.hostname === "localhost") {
+                favorites = sampleFavorites;
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+            }
+            
             const songContainer = document.getElementById("songContainer");
             const emptyMessage = document.getElementById("emptyMessage");
             
@@ -816,8 +863,11 @@
                     songDiv.classList.add("song");
                     
                     const img = document.createElement("img");
-                    img.src = song.cover || "https://via.placeholder.com/160";
+                    img.src = song.cover || "https://via.placeholder.com/160?text=No+Cover";
                     img.alt = song.title;
+                    img.onerror = function() {
+                        this.src = "https://via.placeholder.com/160?text=No+Cover";
+                    };
                     
                     const title = document.createElement("h3");
                     title.textContent = song.title;
@@ -839,6 +889,7 @@
                     
                     // Add click handler to play the song
                     songDiv.addEventListener("click", () => {
+                        currentSongIndex = index;
                         loadSong(song);
                         if (!isPlaying) {
                             playPause();
@@ -876,8 +927,8 @@
         window.toggleMute = toggleMute;
         window.toggleCurrentLike = toggleCurrentLike;
         function playSongFromPage(pIndex, sIndex) {
-    window.playSong(pIndex, sIndex);
-}
+            window.playSong(pIndex, sIndex);
+        }
     </script>
 </body>
 </html>

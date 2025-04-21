@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmony - Music Streaming</title>
     <style>
+        :root {
+            --primary-bg: #0f0e17;
+            --secondary-bg: #1a1a2e;
+            --tertiary-bg: #1f1f3d;
+            --highlight-color: #ff8906;
+            --text-primary: #fffffe;
+            --text-secondary: #a7a9be;
+            --text-tertiary: #7A7A7A;
+            --player-bg: rgba(26, 26, 46, 0.95);
+            --progress-bar: rgba(167, 169, 190, 0.2);
+            --progress-bar-active: linear-gradient(90deg, #ff8906, #e53170);
+            --card-hover: #2a2a4a;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --accent-color: #e53170;
+        }
         /* Global Styles */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -21,7 +35,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            background-color: #1a1a2e;
+            background-color: var(--secondary-bg);
             padding: 15px 40px;
             z-index: 1000;
             display: flex;
@@ -32,48 +46,67 @@
 
         .logo img {
             height: 50px;
+            width: auto;
+            margin-bottom: 15px;
         }
 
         nav {
             width: 100%;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
+            list-style: none;
             flex-wrap: wrap;
-            justify-content: space-evenly;
+            justify-content: center;
             width: 90%;
             padding: 0;
             margin: 0;
         }
 
         nav ul li {
-            display: inline;
+            margin: 0 10px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: #eebbc3;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 14px;
+            transition: color 0.3s ease;
             padding: 10px;
             display: block;
         }
 
-        nav ul li a:hover {
-            color: #ff8906;
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--highlight-color);
         }
 
+        .login-btn {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--highlight-color);
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--highlight-color);
+            color: var(--primary-bg);
+        }
+
+        /* Rest of your existing styles... */
         /* Hero Section */
         .hero {
             text-align: center;
             padding: 100px 20px;
             background: linear-gradient(135deg, #ff8906, #e53170);
-            margin-top: 100px;
+            margin-top: 72px;
             color: #fffffe;
         }
 
@@ -463,6 +496,14 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 16px 24px;
+            }
+
+            nav ul li {
+                margin-left: 16px;
+            }
+
             .player-container {
                 flex-direction: column;
                 padding: 10px;
@@ -485,10 +526,23 @@
             }
         }
 
-        @media (max-width: 600px) {
-            nav ul {
+        @media (max-width: 576px) {
+            header {
                 flex-direction: column;
-                align-items: center;
+                padding: 12px 16px;
+            }
+
+            .logo {
+                margin-bottom: 12px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 8px;
             }
             
             .hero h1 {
@@ -498,21 +552,6 @@
             .playlist {
                 width: 140px;
             }
-        }
-
-        .login-btn {
-            text-decoration: none;
-            color: #fffffe;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 2px solid #ff8906;
-            transition: all 0.3s;
-        }
-
-        .login-btn:hover {
-            background-color: #ff8906;
-            color: #0f0e17;
         }
         
         main {
@@ -528,21 +567,22 @@
 </head>
 <body>
     <header>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
+        </div>
         <nav>
-            <div class="logo">
-                <img src="https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/iconn.jpg" alt="Harmony Logo">
-            </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="browse.html">Browse</a></li>
                 <li><a href="search.html">Search</a></li>
                 <li><a href="favorites.html">Favorites</a></li>
                 <li><a href="profile.html">Profile</a></li>
-                <li><a href="#" onclick="logout()" class="login-btn">Logout</a></li>
+                <li><a href="authentication.html" onclick="logout()" class="login-btn">Logout</a></li>
             </ul>
         </nav>
     </header>
-
+<br>
+<br><br><br>
     <main>
         <section class="hero">
             <h1>Welcome to Harmony</h1>

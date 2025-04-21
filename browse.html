@@ -8,6 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary-bg: #0f0e17;
+            --secondary-bg: #1a1a2e;
+            --tertiary-bg: #1f1f3d;
+            --highlight-color: #ff8906;
+            --text-primary: #fffffe;
+            --text-secondary: #a7a9be;
+            --text-tertiary: #7A7A7A;
+            --player-bg: rgba(26, 26, 46, 0.95);
+            --progress-bar: rgba(167, 169, 190, 0.2);
+            --progress-bar-active: linear-gradient(90deg, #ff8906, #e53170);
+            --card-hover: #2a2a4a;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --accent-color: #e53170;
+        }
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -23,7 +38,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            background-color: #1a1a2e;
+            background-color: var(--secondary-bg);
             padding: 15px 40px;
             z-index: 1000;
             display: flex;
@@ -34,60 +49,66 @@
 
         .logo img {
             height: 50px;
+            width: auto;
+            margin-bottom: 15px;
         }
 
         nav {
             width: 100%;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
+            list-style: none;
             flex-wrap: wrap;
-            justify-content: space-evenly;
+            justify-content: center;
             width: 90%;
             padding: 0;
             margin: 0;
         }
 
         nav ul li {
-            display: inline;
+            margin: 0 10px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: #eebbc3;
-            font-weight: 600;
-            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
             padding: 10px;
             display: block;
         }
 
-        nav ul li a:hover {
-            color: #ff8906;
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--highlight-color);
         }
 
         .login-btn {
             text-decoration: none;
-            color: #fffffe;
+            color: var(--text-primary);
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 20px;
-            border: 2px solid #ff8906;
+            border: 2px solid var(--highlight-color);
             transition: all 0.3s;
         }
 
         .login-btn:hover {
-            background-color: #ff8906;
-            color: #0f0e17;
+            background-color: var(--highlight-color);
+            color: var(--primary-bg);
         }
+
+
+        
 
         /* Sidebar */
         .sidebar {
-            width: 250px;
+            width: 200px;
             background-color: #16213e;
             padding: 20px;
             height: 100vh;
@@ -586,7 +607,6 @@
             </ul>
         </nav>
     </header>
-    
     <div class="sidebar">
         <h2>Harmony</h2>
         <ul>

@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmony - Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary-bg: #0f0e17;
+            --secondary-bg: #1a1a2e;
+            --tertiary-bg: #1f1f3d;
+            --highlight-color: #ff8906;
+            --text-primary: #fffffe;
+            --text-secondary: #a7a9be;
+            --text-tertiary: #7A7A7A;
+            --player-bg: rgba(26, 26, 46, 0.95);
+            --progress-bar: rgba(167, 169, 190, 0.2);
+            --progress-bar-active: linear-gradient(90deg, #ff8906, #e53170);
+            --card-hover: #2a2a4a;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --accent-color: #e53170;
+        }
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -21,7 +34,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            background-color: #1a1a2e;
+            background-color: var(--secondary-bg);
             padding: 15px 40px;
             z-index: 1000;
             display: flex;
@@ -32,42 +45,62 @@
 
         .logo img {
             height: 50px;
+            width: auto;
+            margin-bottom: 15px;
         }
 
         nav {
             width: 100%;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
+            list-style: none;
             flex-wrap: wrap;
-            justify-content: space-evenly;
+            justify-content: center;
             width: 90%;
             padding: 0;
-            margin: 10px 0 0;
+            margin: 0;
         }
 
         nav ul li {
-            display: inline;
+            margin: 0 10px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: #eebbc3;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 14px;
+            transition: color 0.3s ease;
             padding: 10px;
             display: block;
         }
 
-        nav ul li a:hover {
-            color: #ff8906;
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--highlight-color);
         }
 
+        .login-btn, .logout-btn {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--highlight-color);
+            transition: all 0.3s;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            background-color: var(--highlight-color);
+            color: var(--primary-bg);
+        }
         .profile-container {
             max-width: 600px;
             margin: 150px auto 100px;
@@ -173,25 +206,6 @@
         }
 
         .update-btn:hover {
-            background: #e53170;
-            color: #fffffe;
-            transform: scale(1.05);
-        }
-
-        .logout-btn {
-            background: transparent;
-            color: #e53170;
-            border: 2px solid #e53170;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .logout-btn:hover {
             background: #e53170;
             color: #fffffe;
             transform: scale(1.05);
@@ -547,6 +561,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -625,6 +640,40 @@
     </div>
 
     <script>
+        // Playlists data
+        const playlists = [
+            {
+                name: "Malayalam",
+                cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/malyalam.jpg",
+                songs: [
+                    { title: "Appangal-Embadum", artist: "Kannur Seenath", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Appangal-Embadum.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/bangaloredays.jpg" },
+                    { title: "Darshana", artist: "Hesham Abdul Wahab", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Darshana Hridayam 128 Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/hridyam.jpg" },
+                    { title: "Imaigalo", artist: "AniVee", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Imaigalo Anivee 128 Kbps.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/imaiglo.jpg" },
+                    { title: "Welcome To Hyderabad", artist: "Vishnu Vijay", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Welcome To Hyderabad.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/premalu.jpg" }
+                ]
+            },
+            {
+                name: "Telugu",
+                cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/telugu.jpg",
+                songs: [
+                    { title: "Aa Seetadevi Navvula", artist: "Arijit Singh", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aa Seetadevi Navvula - (Raag.Fm).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/rowdyfellow.jpg" },
+                    { title: "Aagi Aagi", artist: "Anurag Kulkarni", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aagi Aagi - SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/ene.jpg" },
+                    { title: "Aakasam Baddalaina", artist: "Sagar", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Aakasam Baddalaina-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/mr.jpg" },
+                    { title: "Em Sandheham Ledhu", artist: "Kalyani Malik", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Em Sandheham Ledhu-SenSongsMp3.Co.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/Oohalu_Gusagusalade_poster.jpg" }
+                ]
+            },
+            {
+                name: "English",
+                cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/eng.jpg",
+                songs: [
+                    { title: "blue", artist: "yung kai", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/yung kai - blue (Official Audio) [ ezmp3.cc ].mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blue.jpg" },
+                    { title: "Wonderwall", artist: "Oasis", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Wonderwall (PenduJatt.Com.Se).mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/wonder.jpg" },
+                    { title: "Blinding-Lights", artist: "The Weeknd", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/The-Weeknd-Blinding-Lights.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/blinding.jpg" },
+                    { title: "sailor", artist: "Gigi Perez", file: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/Sailor Song - Gigi Perez.mp3", cover: "https://raw.githubusercontent.com/shreyashsp25/harmony/main/image/sailor.jpg" }
+                ]
+            }
+        ];
+
         // Initialize when DOM is fully loaded
         document.addEventListener("DOMContentLoaded", function() {
             console.log("Profile page loaded");
